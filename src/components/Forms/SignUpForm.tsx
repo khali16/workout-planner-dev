@@ -1,17 +1,89 @@
 import React from 'react'
 import styles from './SignUpForm.module.css'
+import useInput from '../../hooks/useInput';
+
+const isNotEmpty = (value: string) => value.trim() !== "";
+const isEmail = (value: string) => value.includes('@')
 
 const SignUpForm = () => {
+    const {
+        value: firstName,
+        isValid: nameIsValid,
+        hasError: nameHasError,
+        valueChangeHandler: nameChangeHandler,
+        inputBlurHandler: nameBlurHandler,
+        reset: nameReset,
+      } = useInput(isNotEmpty);
+
+      const {
+        value: lastName,
+        isValid: lastNameIsValid,
+        hasError: lastNameHasError,
+        valueChangeHandler: lastNameChangeHandler,
+        inputBlurHandler: lastNameBlurHandler,
+        reset: lastNameReset,
+      } = useInput(isNotEmpty);
+
+      const {
+        value: email,
+        isValid: emailIsValid,
+        hasError: emailHasError,
+        valueChangeHandler: emailChangeHandler,
+        inputBlurHandler: emailBlurHandler,
+        reset: emailReset,
+      } = useInput(isEmail);
+
+      const {
+        value: password,
+        isValid: passwordIsValid,
+        hasError: passwordHasError,
+        valueChangeHandler: passwordChangeHandler,
+        inputBlurHandler: passwordBlurHandler,
+        reset: passwordReset,
+      } = useInput(isNotEmpty);
+
+    let formIsValid = false;
+    if(nameIsValid && lastNameIsValid && emailIsValid && passwordIsValid){
+        formIsValid = true
+    }
+
+    const submitHanlder = (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if(!formIsValid){
+            return;
+        }
+        console.log(firstName, lastName, email, password)
+
+        nameReset()
+        lastNameReset()
+        emailReset()
+        passwordReset()
+    }
+
+    const nameInputStyles = nameHasError ? styles.invalid : ''
+    const lastNameInputStyles = lastNameHasError ? styles.invalid : ''
+    const emailInputStyles = emailHasError ? styles.invalid : ''
+    const passwordInputStyles = passwordHasError ? styles.invalid : ''
+
     return (
-        <form className={styles.Form}>
+        <form className={styles.form} onSubmit={submitHanlder}>
+            <div className={`${styles.formSelect} ${nameInputStyles}`}>
             <label htmlFor="firstName">First Name</label>
-            <input type="text" />
-            <label htmlFor="lastName">Last Name</label>
-            <input type="text" />
+            <input type="text" value={firstName} onChange={nameChangeHandler} onBlur={nameBlurHandler}/>
+            </div>
+            <div className={`${styles.formSelect} ${lastNameInputStyles}`}>
+            <label htmlFor="lastName">Last Name</label>            
+            <input type="text" value={lastName} onChange={lastNameChangeHandler} onBlur={lastNameBlurHandler}/>
+            </div>
+            <div className={`${styles.formSelect} ${emailInputStyles}`}>
             <label htmlFor="email">E-Mail</label>
-            <input type="email" />
+            <input type="email" value={email} onChange={emailChangeHandler} onBlur={emailBlurHandler}/>
+            </div>
+            <div className={`${styles.formSelect} ${passwordInputStyles}`}>
             <label htmlFor="password">Password</label>
-            <input type="password" />
+            <input type="password" value={password} onChange={passwordChangeHandler} onBlur={passwordBlurHandler}/>
+            </div>
             <button><span>Sign Up</span></button>
         </form>
     )

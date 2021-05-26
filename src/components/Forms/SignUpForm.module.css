@@ -1,21 +1,41 @@
-.Form {
-  height: 400px;
-  width: 35%;
-  background-color: aquamarine;
+.form {
+  width: 30%;
+  height: 450px;
   margin: auto;
-  margin-top: 200px;
-  border: 3px solid greenyellow;
-  padding: 10px;
-}
-
-.Form label {
-  font-weight: bold;
+  margin-top: 5%;
   display: block;
-  margin-bottom: 0.5rem;
-  margin-left: 20px;
+  background-color: #ccffb3;
+  border-radius: 9px;
+  border: 2px solid #4ce600;
+  padding: 20px;
+  text-align: center;
+}
+.formSelect label {
+  font-size: large;
+  margin-right: 5px;
+  display: block;
 }
 
-.Form button {
+.formSelect input {
+  width: 50%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #4ce600;
+  box-shadow: 0 0 1px 1px rgba(51, 153, 0);
+  border-radius: 10px;
+}
+
+.invalid input {
+  background-color: #ffc2b3;
+}
+
+.form input,
+.form textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.form button {
   border: 3px solid green;
   background-color: lightgreen;
   border: none;
@@ -23,20 +43,22 @@
   text-align: center;
   font-size: 28px;
   padding: 20px;
-  width: 170px;
+  width: 40%;
+  max-height: 75px;
   transition: all 0.5s;
   cursor: pointer;
-  float: right;
+  float: center;
+  margin-top: 20px;
 }
 
-.Form button span {
+.form button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.Form button span:after {
+.form button span:after {
   content: "\00bb";
   position: absolute;
   opacity: 0;
@@ -45,21 +67,11 @@
   transition: 0.5s;
 }
 
-.Form button:hover span {
+.form button:hover span {
   padding-right: 25px;
 }
 
-.Form button:hover span:after {
+.form button:hover span:after {
   opacity: 1;
   right: 0;
-}
-
-.Form input {
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid green;
-  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
-  border-radius: 10px;
-  width: 50%;
-  margin-left: 20px;
 }
