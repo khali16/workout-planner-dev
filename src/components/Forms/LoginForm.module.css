@@ -1,0 +1,64 @@
+.Form {
+  height: 200px;
+  width: 35%;
+  background-color: aquamarine;
+  margin: auto;
+  margin-top: 200px;
+  border: 3px solid greenyellow;
+  padding: 10px;
+}
+
+.Form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-right: 10px;
+}
+
+.Form button {
+  border: 3px solid green;
+  background-color: lightgreen;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  float: right;
+}
+
+.Form button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.Form button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.Form button:hover span {
+  padding-right: 25px;
+}
+
+.Form button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.Form input {
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid green;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  width: 50%;
+}
