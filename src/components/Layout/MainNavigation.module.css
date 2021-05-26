@@ -12,6 +12,14 @@
   font-size: 2rem;
   color: white;
 }
+.logo a {
+  text-decoration: none;
+}
+.logo a:hover,
+.logo a:active,
+.logo a.active {
+  color: whitesmoke;
+}
 
 .nav ul {
   list-style: none;
