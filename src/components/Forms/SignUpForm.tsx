@@ -1,9 +1,8 @@
 import React from 'react'
 import styles from './SignUpForm.module.css'
 import useInput from '../../hooks/useInput';
+import {isNotEmpty, isEmail, passwordValidator} from '../../constants/utils/validation';
 
-const isNotEmpty = (value: string) => value.trim() !== "";
-const isEmail = (value: string) => value.includes('@')
 
 const SignUpForm = () => {
     const {
@@ -40,7 +39,7 @@ const SignUpForm = () => {
         valueChangeHandler: passwordChangeHandler,
         inputBlurHandler: passwordBlurHandler,
         reset: passwordReset,
-      } = useInput(isNotEmpty);
+      } = useInput(passwordValidator);
 
     let formIsValid = false;
     if(nameIsValid && lastNameIsValid && emailIsValid && passwordIsValid){
@@ -68,19 +67,19 @@ const SignUpForm = () => {
 
     return (
         <form className={styles.form} onSubmit={submitHanlder}>
-            <div className={`${styles.formSelect} ${nameInputStyles}`}>
+            <div className={`${styles.selectedFormItem} ${nameInputStyles}`}>
             <label htmlFor="firstName">First Name</label>
             <input type="text" value={firstName} onChange={nameChangeHandler} onBlur={nameBlurHandler}/>
             </div>
-            <div className={`${styles.formSelect} ${lastNameInputStyles}`}>
+            <div className={`${styles.selectedFormItem} ${lastNameInputStyles}`}>
             <label htmlFor="lastName">Last Name</label>            
             <input type="text" value={lastName} onChange={lastNameChangeHandler} onBlur={lastNameBlurHandler}/>
             </div>
-            <div className={`${styles.formSelect} ${emailInputStyles}`}>
+            <div className={`${styles.selectedFormItem} ${emailInputStyles}`}>
             <label htmlFor="email">E-Mail</label>
             <input type="email" value={email} onChange={emailChangeHandler} onBlur={emailBlurHandler}/>
             </div>
-            <div className={`${styles.formSelect} ${passwordInputStyles}`}>
+            <div className={`${styles.selectedFormItem} ${passwordInputStyles}`}>
             <label htmlFor="password">Password</label>
             <input type="password" value={password} onChange={passwordChangeHandler} onBlur={passwordBlurHandler}/>
             </div>

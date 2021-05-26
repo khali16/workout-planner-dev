@@ -10,13 +10,13 @@
   padding: 20px;
   text-align: center;
 }
-.formSelect label {
+.selectedFormItem label {
   font-size: large;
   margin-right: 5px;
   display: block;
 }
 
-.formSelect input {
+.selectedFormItem input {
   width: 50%;
   padding: 10px;
   margin: 10px 0;
