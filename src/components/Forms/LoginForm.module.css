@@ -1,9 +1,9 @@
 .Form {
   height: 270px;
-  width: 35%;
+  width: 500px;
   background-color: aquamarine;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 70px;
   border: 3px solid greenyellow;
   border-radius: 10px;
   padding: 20px;
@@ -19,7 +19,7 @@
 }
 
 .selectedFormItem input {
-  width: 50%;
+  width: 400px;
   padding: 10px;
   margin: 10px 0;
   border: 2px solid #4ce600;

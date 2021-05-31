@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-const useInput = (validateValue) => {
-  const [enteredValue, setEnteredValue] = useState("");
+const useInput = (validateValue: (value:string) => boolean) => {
+  const [enteredValue, setEnteredValue] = useState<string>("");
   const [isTouched, setIsTouched] = useState(false);
 
   const valueIsValid = validateValue(enteredValue);
   const hasError = !valueIsValid && isTouched;
 
-  const valueChangeHandler = (event) => {
+  const valueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredValue(event.target.value);
   };
 
