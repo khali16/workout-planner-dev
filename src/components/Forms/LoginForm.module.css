@@ -1,10 +1,10 @@
 .Form {
   height: 270px;
   width: 500px;
-  background-color: aquamarine;
+  background-color: #80b1b3;
   margin: auto;
   margin-top: 70px;
-  border: 3px solid greenyellow;
+  border: 3px solid #395e60;
   border-radius: 10px;
   padding: 20px;
   display: block;
@@ -12,7 +12,7 @@
 }
 
 .selectedFormItem label {
-  font-weight: bold;
+  font-size: larger;
   margin-bottom: 0.5rem;
   margin-right: 10px;
   display: block;
@@ -22,17 +22,17 @@
   width: 400px;
   padding: 10px;
   margin: 10px 0;
-  border: 2px solid #4ce600;
-  box-shadow: 0 0 1px 1px rgba(51, 153, 0);
+  border: 2px solid #395e60;
+  box-shadow: 0 0 1px 1px #395e60;
   border-radius: 10px;
 }
 .invalid input {
-  background-color: #ffc2b3;
+  background-color: #f3d8d8;
 }
 
 .Form button {
-  border: 3px solid green;
-  background-color: lightgreen;
+  border: 3px solid #263f40;
+  background-color: #263f40;
   border: none;
   color: #ffffff;
   text-align: center;
@@ -73,8 +73,8 @@
 .Form input {
   padding: 10px;
   margin: 10px 0;
-  border: 2px solid green;
-  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  border: 2px solid #395e60;
+  box-shadow: 0 0 7px 2px #395e60;
   border-radius: 10px;
   width: 50%;
 }

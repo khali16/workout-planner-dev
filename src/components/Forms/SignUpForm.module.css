@@ -4,14 +4,14 @@
   margin: auto;
   margin-top: 50px;
   display: block;
-  background-color: #ccffb3;
+  background-color: #80b1b3;
   border-radius: 9px;
-  border: 2px solid #4ce600;
+  border: 2px solid #395e60;
   padding: 20px;
   text-align: center;
 }
 .selectedFormItem label {
-  font-size: large;
+  font-size: larger;
   margin-right: 5px;
   display: block;
 }
@@ -20,13 +20,13 @@
   width: 300px;
   padding: 10px;
   margin: 10px 0;
-  border: 2px solid #4ce600;
-  box-shadow: 0 0 1px 1px rgba(51, 153, 0);
+  border: 2px solid #395e60;
+  box-shadow: 0 0 1px 1px #395e60;
   border-radius: 10px;
 }
 
 .invalid input {
-  background-color: #ffc2b3;
+  background-color: #f3d8d8;
 }
 
 .form input,
@@ -36,8 +36,8 @@
 }
 
 .form button {
-  border: 3px solid green;
-  background-color: lightgreen;
+  border: 3px solid #263f40;
+  background-color: #263f40;
   border: none;
   color: #ffffff;
   text-align: center;

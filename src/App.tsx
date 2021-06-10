@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar/Calendar";
+import DayDetail from "./components/Calendar/DayDetail";
 import LoginForm from "./components/Forms/LoginForm";
 import SignUpForm from "./components/Forms/SignUpForm";
 import Layout from "./components/Layout/Layout";
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/sign-up">
           <SignUpForm />
+        </Route>
+        <Route path="/calendar/5/10">
+          <DayDetail text={1} />
         </Route>
         <Route path="/calendar">
           <Calendar />

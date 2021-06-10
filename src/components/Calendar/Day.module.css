@@ -1,0 +1,9 @@
+.Day {
+  background-color: #afcecf;
+  cursor: pointer;
+  height: 170px;
+}
+
+.nonDay {
+  background-color: transparent;
+}

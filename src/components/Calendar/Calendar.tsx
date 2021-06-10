@@ -1,7 +1,12 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styles from "./Calendar.module.css";
+import Day from "./Day";
+import { Route, useRouteMatch } from "react-router-dom";
+import DayDetail from "./DayDetail";
 
 const Calendar = () => {
+  const match = useRouteMatch();
+
   const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const DAYS_LEAP = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const DAYS_OF_THE_WEEK = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
@@ -26,7 +31,6 @@ const Calendar = () => {
   const [month, setMonth] = useState(date.getMonth());
   const [year, setYear] = useState(date.getFullYear());
   const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
-  const [todo, setTodo] = useState(false);
 
   useEffect(() => {
     setDay(date.getDate());
@@ -44,13 +48,6 @@ const Calendar = () => {
   }
 
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
-
-  const cipka = (event: React.MouseEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setTodo((prevState) => {
-      return !prevState;
-    });
-  };
 
   return (
     <>
@@ -84,16 +81,7 @@ const Calendar = () => {
             .fill(null)
             .map((_, index) => {
               const d = index - (startDay - 2);
-              return (
-                <div className={styles.Day} key={index} onClick={cipka}>
-                  {d > 0 ? d : ""}
-                  {todo && (
-                    <div>
-                      <input type="text" />
-                    </div>
-                  )}
-                </div>
-              );
+              return <Day key={d} d={d} index={index} month={month} />;
             })}
         </div>
       </div>
