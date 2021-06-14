@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styles from "./Calendar.module.css";
 import Day from "./Day";
-import { Route, useRouteMatch } from "react-router-dom";
+import { Route, useRouteMatch, withRouter, Link } from "react-router-dom";
 import DayDetail from "./DayDetail";
 
 const Calendar = () => {
@@ -81,7 +81,11 @@ const Calendar = () => {
             .fill(null)
             .map((_, index) => {
               const d = index - (startDay - 2);
-              return <Day key={d} d={d} index={index} month={month} />;
+              return (
+                <>
+                  <Day key={d} d={d} index={index} month={month}></Day>
+                </>
+              );
             })}
         </div>
       </div>
@@ -89,4 +93,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default withRouter(Calendar);

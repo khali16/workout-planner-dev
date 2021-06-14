@@ -1,6 +1,195 @@
-.frame {
-  width: 700px;
-  width: 500px;
-  background-color: brown;
-  color: green;
+.Frame {
+  width: 1200px;
+  height: 600px;
+  border: 2px solid #222222;
+  background-color: #263f40;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+.Header {
+  font-size: 48px;
+  font-weight: bold;
+  background-color: #263f40;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.Day {
+  margin-right: 7px;
+}
+
+.Month {
+  margin-left: 7px;
+}
+
+.Frame {
+  position: relative;
+  padding: 15px 0 0;
+  width: 1000px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.Frame label {
+  font-size: larger;
+  margin-bottom: 0.5rem;
+  margin-right: 15px;
+}
+
+.TextInput {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.TextInput input::placeholder {
+  color: transparent;
+}
+
+.TextInput input:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.TextInput_label {
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.TextInput:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+
+.TextInput_label:focus {
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #11998e;
+  font-weight: 700;
+}
+
+.TextInput:required:invalid {
+  box-shadow: none;
+}
+
+.RadioInput {
+  font-family: inherit;
+  width: 100%;
+  margin-top: 50px;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.RadioInput span {
+  font-size: 20px;
+  color: #9b9b9b;
+}
+
+.RadioInput label {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+.RadioInput input[type="radio"] {
+  display: none;
+}
+
+.RadioInput input[type="radio"] + *::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.3rem;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: gray;
+  margin-left: 50px;
+}
+.RadioInput input[type="radio"]:checked + * {
+  color: #11998e;
+}
+.RadioInput input[type="radio"]:checked + *::before {
+  background: radial-gradient(
+    #11998e 0%,
+    #11998e 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: #11998e;
+}
+
+.SpecifiedWorkout {
+  margin-top: 50px;
+}
+
+.VideoInput {
+  margin-top: 50px;
+}
+
+.Label {
+  font-size: 20px;
+  color: #9b9b9b;
+}
+
+.Frame button {
+  border: 3px solid #263f40;
+  background-color: #11998e;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  float: right;
+  margin-right: 40px;
+  margin-top: 20px;
+}
+
+.Frame button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.Frame button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.Frame button:hover span {
+  padding-right: 25px;
+}
+
+.Frame button:hover span:after {
+  opacity: 1;
+  right: 0;
 }

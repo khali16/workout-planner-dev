@@ -19,8 +19,8 @@ function App() {
         <Route path="/sign-up">
           <SignUpForm />
         </Route>
-        <Route path="/calendar/5/10">
-          <DayDetail text={1} />
+        <Route path="/calendar/:month/:day">
+          <DayDetail />
         </Route>
         <Route path="/calendar">
           <Calendar />

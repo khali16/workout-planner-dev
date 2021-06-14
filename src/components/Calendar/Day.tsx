@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import styles from "./Day.module.css";
-import { useRouteMatch, useHistory, Route, useParams } from "react-router-dom";
+import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
 import DayDetail from "./DayDetail";
 
 interface OwnProps {
@@ -9,17 +9,14 @@ interface OwnProps {
   month: number;
 }
 
-interface ParamTypes {
-  day: string;
-}
-
 const Day: React.FC<OwnProps> = ({ index, d, month }: OwnProps) => {
   let history = useHistory();
   const match = useRouteMatch();
+  const rightMonthFigure = month + 1;
 
   const cipka = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    history.push(`${match.url}/${month}/${d}`);
+    history.push(`${match.url}/${rightMonthFigure}/${d}`);
   };
 
   const dayBox = d > 0 ? styles.Day : styles.nonDay;
