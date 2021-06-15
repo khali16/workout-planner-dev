@@ -1,38 +1,73 @@
 .Form {
-  height: 270px;
-  width: 500px;
-  background-color: #80b1b3;
+  width: 800px;
+  height: 300px;
+  border: 2px solid #222222;
+  background-color: #263f40;
   margin: auto;
-  margin-top: 70px;
-  border: 3px solid #395e60;
+  margin-top: 50px;
   border-radius: 10px;
-  padding: 20px;
-  display: block;
-  text-align: center;
+  position: relative;
+  padding: 15px 0 0;
+  width: 1000px;
 }
 
-.selectedFormItem label {
+.Form label {
   font-size: larger;
   margin-bottom: 0.5rem;
-  margin-right: 10px;
-  display: block;
+  margin-right: 15px;
 }
 
-.selectedFormItem input {
-  width: 400px;
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid #395e60;
-  box-shadow: 0 0 1px 1px #395e60;
-  border-radius: 10px;
+.FormInput {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
 }
-.invalid input {
-  background-color: #f3d8d8;
+
+.FormInput input::placeholder {
+  color: transparent;
+}
+
+.FormInput input:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.TextInput_label {
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.FormInput:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+
+.TextInput_label:focus {
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #11998e;
+  font-weight: 700;
+}
+
+.FormInput:required:invalid {
+  box-shadow: none;
 }
 
 .Form button {
   border: 3px solid #263f40;
-  background-color: #263f40;
+  background-color: #11998e;
   border: none;
   color: #ffffff;
   text-align: center;
@@ -41,7 +76,8 @@
   width: 150px;
   transition: all 0.5s;
   cursor: pointer;
-  float: center;
+  float: right;
+  margin-right: 40px;
   margin-top: 20px;
 }
 
@@ -70,11 +106,10 @@
   right: 0;
 }
 
-.Form input {
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid #395e60;
-  box-shadow: 0 0 7px 2px #395e60;
-  border-radius: 10px;
-  width: 50%;
+.invalid input {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, red, pink);
+  border-image-slice: 1;
 }
