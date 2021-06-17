@@ -2,14 +2,10 @@ import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import ReactPlayer from "react-player";
 import "react-vertical-timeline-component/style.min.css";
 
-import ExerciseForm, {
-  workoutPlan,
-  workoutPlanKubi,
-} from "./exercise/form/ExerciseForm";
-import { useEffect, useState } from "react";
+import { workoutPlanKubi } from "./exercise/form/ExerciseForm";
+import { useState } from "react";
 import ExerciseRenderer from "./exercise/ExerciseRenderer";
 import { Exercise } from "../../constants/interfaces";
 import { useCurrentDate } from "../../hooks/useCurrentDate";

@@ -108,7 +108,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
     // history.push("/calendar");
   };
 
-  async function addWorkout(workoutPlan: workoutPlan) {
+  async function addWorkout(workoutPlan: workoutPlanKubi) {
     // const response = await fetch(
     //   "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
     //   {
