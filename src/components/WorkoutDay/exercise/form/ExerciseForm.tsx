@@ -23,7 +23,7 @@ export interface workoutPlan {
   time?: number;
 }
 
-interface User {
+export interface User {
   //todo backend layer
   login: string;
   password: string;
