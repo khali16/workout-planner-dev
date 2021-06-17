@@ -1,32 +1,45 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, Consumer } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import styles from "./WorkoutDayForm.module.css";
-import useInput from "../../../hooks/useInput";
-import { hasAtLeastFiveLetters } from "../../../utils/validation";
-import {getFullMonthName} from "../../../utils/dateUtils";
-import ReactPlayer from "react-player";
+import styles from "./ExerciseForm.module.css";
+import useInput from "../../../../hooks/useInput";
+import { hasAtLeastFiveLetters } from "../../../../utils/validation";
+import { getFullMonthName } from "../../../../utils/dateUtils";
+import { Exercise } from "../../../../constants/interfaces";
+import { useCurrentDate } from "../../../../hooks/useCurrentDate";
 
-interface paramTypes {
-  day: string;
-  month: string;
-}
-
-interface workoutPlan {
-  specifiedDay: string;
-  specifiedMonth: string;
-  title: string;
-  bodyWorkout: {
+export interface workoutPlan {
+  specifiedDay?: string;
+  specifiedMonth?: string;
+  title?: string;
+  bodyWorkout?: {
     legs: string;
     glutes: string;
     abs: string;
     arms: string;
     back: string;
   };
-  details: string;
-  video: string;
+  details?: string;
+  video?: string;
+  time?: number;
 }
 
-const WorkoutDayForm: React.FC = () => {
+export interface workoutPlanKubi {
+  specifiedDay: string;
+  specifiedMonth: string;
+  isCyclical: {
+    days: number[];
+  };
+  title?: string;
+  time: number;
+  exercises: Exercise[];
+}
+
+interface OwnProps {
+  addExercise: (exercise: Exercise) => {};
+  setEditMode: (bool: boolean) => {};
+}
+
+const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
   const [legsWorkout, setLegsWorkout] = useState("");
   const [glutesWorkout, setGlutesWorkout] = useState("");
   const [absWorkout, setAbsWorkout] = useState("");
@@ -52,12 +65,7 @@ const WorkoutDayForm: React.FC = () => {
     inputBlurHandler: specifiedWorkoutBlurHandler,
   } = useInput(hasAtLeastFiveLetters);
 
-  const params = useParams<paramTypes>();
-  const { day, month } = params;
-
-
-  let monthToNumber = parseInt(month) - 1;
-  let monthName = getFullMonthName(monthToNumber);
+  const { day, monthName } = useCurrentDate();
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -66,36 +74,53 @@ const WorkoutDayForm: React.FC = () => {
       return;
     }
 
-    const workoutPlan: workoutPlan = {
-      specifiedDay: day,
-      specifiedMonth: monthName,
+    // const workoutPlan: workoutPlan = {
+    //   specifiedDay: day,
+    //   specifiedMonth: monthName,
+    //   title: enteredTitle,
+    //   bodyWorkout: {
+    //     legs: legsWorkout,
+    //     glutes: glutesWorkout,
+    //     abs: absWorkout,
+    //     arms: armsWorkout,
+    //     back: backWorkout,
+    //   },
+    //   details: enteredSpecifiedWorkout,
+    //   video: url,
+    // };
+    // // addWorkout(workoutPlan);
+    addExercise({
       title: enteredTitle,
-      bodyWorkout: {
-        legs: legsWorkout,
-        glutes: glutesWorkout,
-        abs: absWorkout,
-        arms: armsWorkout,
-        back: backWorkout,
+      engagedBodyParts: {
+        legs: { checked: !!legsWorkout, title: legsWorkout },
+        glutes: { checked: !!glutesWorkout, title: glutesWorkout },
+        abs: { checked: !!absWorkout, title: absWorkout },
+        arms: { checked: !!armsWorkout, title: armsWorkout },
+        back: { checked: !!backWorkout, title: backWorkout },
+        warmUp: { checked: !!glutesWorkout, title: glutesWorkout }, //todo add warmup
       },
-      details: enteredSpecifiedWorkout,
+      description: enteredSpecifiedWorkout,
       video: url,
-    };
-    addWorkout(workoutPlan);
-    history.push("/calendar");
+      totalTime: 30,
+      finished: false,
+    });
+    setEditMode(false);
+    // history.push("/calendar");
   };
 
   async function addWorkout(workoutPlan: workoutPlan) {
-    const response = await fetch(
-      "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
-      {
-        method: "POST",
-        body: JSON.stringify(workoutPlan),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
+    // const response = await fetch(
+    //   "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
+    //   {
+    //     method: "POST",
+    //     body: JSON.stringify(workoutPlan),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const data = await response.json();
+    console.log(workoutPlan);
   }
 
   const legsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -213,7 +238,6 @@ const WorkoutDayForm: React.FC = () => {
                 className={styles.TextInput}
                 onChange={urlWorkoutHanlder}
               />
-
             </div>
             <button>
               <span>Submit</span>
@@ -225,4 +249,4 @@ const WorkoutDayForm: React.FC = () => {
   );
 };
 
-export default WorkoutDayForm;
+export default ExerciseForm;
