@@ -2,7 +2,8 @@ import React, { useState, ChangeEvent } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styles from "./DayDetail.module.css";
 import useInput from "../../hooks/useInput";
-import { hasAtLeastFiveLetters } from "../../constants/utils/validation";
+import { hasAtLeastFiveLetters } from "../../utils/validation";
+import {getFullMonthName} from "../../utils/dateUtils";
 
 interface paramTypes {
   day: string;
@@ -53,22 +54,9 @@ const DayDetail: React.FC = () => {
   const params = useParams<paramTypes>();
   const { day, month } = params;
 
-  let monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+
   let monthToNumber = parseInt(month) - 1;
-  let monthName = monthNames[monthToNumber];
+  let monthName = getFullMonthName(monthToNumber);
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -107,7 +95,6 @@ const DayDetail: React.FC = () => {
       }
     );
     const data = await response.json();
-    console.log(data);
   }
 
   const legsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {

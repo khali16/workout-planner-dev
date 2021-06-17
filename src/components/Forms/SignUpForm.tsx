@@ -5,7 +5,7 @@ import {
   isNotEmpty,
   isEmail,
   passwordValidator,
-} from "../../constants/utils/validation";
+} from "../../utils/validation";
 
 const SignUpForm = () => {
   const {

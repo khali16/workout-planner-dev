@@ -4,7 +4,7 @@ import useInput from "../../hooks//useInput";
 import {
   hasAtLeastFiveLetters,
   passwordValidator,
-} from "../../constants/utils/validation";
+} from "../../utils/validation";
 
 const LoginForm = () => {
   const {
