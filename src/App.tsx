@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar/Calendar";
-import DayDetail from "./components/WorkoutDay/DayDetail";
+import WorkoutDayForm from "./components/WorkoutDay/form/WorkoutDayForm";
 import LoginForm from "./components/Forms/LoginForm";
 import SignUpForm from "./components/Forms/SignUpForm";
 import Layout from "./components/Layout/Layout";
+import WorkoutDay from "./components/WorkoutDay/WorkoutDay";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <SignUpForm />
         </Route>
         <Route path="/calendar/:month/:day">
-          <DayDetail />
+          <WorkoutDay />
         </Route>
         <Route path="/calendar">
           <Calendar />

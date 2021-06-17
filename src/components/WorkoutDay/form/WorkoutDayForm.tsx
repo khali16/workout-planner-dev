@@ -1,9 +1,10 @@
 import React, { useState, ChangeEvent } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import styles from "./DayDetail.module.css";
-import useInput from "../../hooks/useInput";
-import { hasAtLeastFiveLetters } from "../../utils/validation";
-import {getFullMonthName} from "../../utils/dateUtils";
+import styles from "./WorkoutDayForm.module.css";
+import useInput from "../../../hooks/useInput";
+import { hasAtLeastFiveLetters } from "../../../utils/validation";
+import {getFullMonthName} from "../../../utils/dateUtils";
+import ReactPlayer from "react-player";
 
 interface paramTypes {
   day: string;
@@ -25,7 +26,7 @@ interface workoutPlan {
   video: string;
 }
 
-const DayDetail: React.FC = () => {
+const WorkoutDayForm: React.FC = () => {
   const [legsWorkout, setLegsWorkout] = useState("");
   const [glutesWorkout, setGlutesWorkout] = useState("");
   const [absWorkout, setAbsWorkout] = useState("");
@@ -212,6 +213,7 @@ const DayDetail: React.FC = () => {
                 className={styles.TextInput}
                 onChange={urlWorkoutHanlder}
               />
+
             </div>
             <button>
               <span>Submit</span>
@@ -223,4 +225,4 @@ const DayDetail: React.FC = () => {
   );
 };
 
-export default DayDetail;
+export default WorkoutDayForm;
