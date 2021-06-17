@@ -1,8 +1,6 @@
 import React, { MouseEventHandler, useState } from "react";
 import styles from "./Day.module.css";
 import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
-import DayDetail from "./DayDetail";
-
 interface OwnProps {
   index: number;
   d: number;
@@ -14,7 +12,7 @@ const Day: React.FC<OwnProps> = ({ index, d, month }: OwnProps) => {
   const match = useRouteMatch();
   const rightMonthFigure = month + 1;
 
-  const cipka = (event: React.MouseEvent<HTMLElement>) => {
+  const pushToSelectedDayHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     history.push(`${match.url}/${rightMonthFigure}/${d}`);
   };
@@ -23,7 +21,7 @@ const Day: React.FC<OwnProps> = ({ index, d, month }: OwnProps) => {
 
   return (
     <>
-      <div className={dayBox} key={index} onClick={cipka}>
+      <div className={dayBox} key={index} onClick={pushToSelectedDayHandler}>
         {d > 0 ? d : ""}
       </div>
     </>

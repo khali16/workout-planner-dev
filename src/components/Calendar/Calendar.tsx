@@ -3,6 +3,7 @@ import styles from "./Calendar.module.css";
 import Day from "./Day";
 import { Route, useRouteMatch, withRouter, Link } from "react-router-dom";
 import DayDetail from "./DayDetail";
+import { stringify } from "querystring";
 
 const Calendar = () => {
   const match = useRouteMatch();
@@ -31,6 +32,8 @@ const Calendar = () => {
   const [month, setMonth] = useState(date.getMonth());
   const [year, setYear] = useState(date.getFullYear());
   const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
+  const [error, setError] = useState("");
+  const [workouts, setWorkouts] = useState(Array());
 
   useEffect(() => {
     setDay(date.getDate());
@@ -49,6 +52,36 @@ const Calendar = () => {
 
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
 
+  async function fetchWorkout() {
+    try {
+      const response = await fetch(
+        "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json"
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong...");
+      }
+
+      const data = await response.json();
+
+      const workouciki = [];
+
+      for (const key in data) {
+        setWorkouts;
+        workouciki.push({
+          id: key,
+          title: data[key].title,
+          specifiedDay: data[key].specifiedDay,
+          specifiedMonth: data[key].specifiedMonth,
+        });
+      }
+      setWorkouts(workouciki);
+      console.log(workouciki);
+      console.log(workouts);
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
   return (
     <>
       <div className={styles.Frame}>
@@ -62,6 +95,7 @@ const Calendar = () => {
           <div>
             {MONTHS[month]} {year}
           </div>
+          <button onClick={fetchWorkout}>get</button>
           <button
             className={styles.Button}
             onClick={() => setDate(new Date(year, month + 1, day))}

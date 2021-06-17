@@ -69,41 +69,53 @@ const SignUpForm = () => {
   const passwordInputStyles = passwordHasError ? styles.invalid : "";
 
   return (
-    <form className={styles.form} onSubmit={submitHanlder}>
-      <div className={`${styles.selectedFormItem} ${nameInputStyles}`}>
-        <label htmlFor="firstName">First Name</label>
+    <form className={styles.Form} onSubmit={submitHanlder}>
+      <div className={`${nameInputStyles}`}>
+        <label htmlFor="firstName" className={styles.FormInput_label}>
+          First Name
+        </label>
         <input
           type="text"
           value={firstName}
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
+          className={styles.FormInput}
         />
       </div>
-      <div className={`${styles.selectedFormItem} ${lastNameInputStyles}`}>
-        <label htmlFor="lastName">Last Name</label>
+      <div className={`${lastNameInputStyles}`}>
+        <label htmlFor="lastName" className={styles.FormInput_label}>
+          Last Name
+        </label>
         <input
           type="text"
           value={lastName}
           onChange={lastNameChangeHandler}
           onBlur={lastNameBlurHandler}
+          className={styles.FormInput}
         />
       </div>
-      <div className={`${styles.selectedFormItem} ${emailInputStyles}`}>
-        <label htmlFor="email">E-Mail</label>
+      <div className={`${emailInputStyles}`}>
+        <label htmlFor="email" className={styles.FormInput_label}>
+          E-Mail
+        </label>
         <input
           type="email"
           value={email}
           onChange={emailChangeHandler}
           onBlur={emailBlurHandler}
+          className={styles.FormInput}
         />
       </div>
       <div className={`${styles.selectedFormItem} ${passwordInputStyles}`}>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className={styles.FormInput_label}>
+          Password
+        </label>
         <input
           type="password"
           value={password}
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
+          className={styles.FormInput}
         />
       </div>
       <button>

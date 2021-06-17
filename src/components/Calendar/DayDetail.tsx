@@ -1,21 +1,55 @@
-import React from "react";
-import {
-  useParams,
-  Route,
-  Link,
-  useRouteMatch,
-  match,
-  matchPath,
-} from "react-router-dom";
-import Day from "./Day";
+import React, { useState, ChangeEvent } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import styles from "./DayDetail.module.css";
+import useInput from "../../hooks/useInput";
+import { hasAtLeastFiveLetters } from "../../constants/utils/validation";
 
 interface paramTypes {
   day: string;
   month: string;
 }
 
+interface workoutPlan {
+  specifiedDay: string;
+  specifiedMonth: string;
+  title: string;
+  bodyWorkout: {
+    legs: string;
+    glutes: string;
+    abs: string;
+    arms: string;
+    back: string;
+  };
+  details: string;
+  video: string;
+}
+
 const DayDetail: React.FC = () => {
+  const [legsWorkout, setLegsWorkout] = useState("");
+  const [glutesWorkout, setGlutesWorkout] = useState("");
+  const [absWorkout, setAbsWorkout] = useState("");
+  const [armsWorkout, setArmsWorkout] = useState("");
+  const [backWorkout, setBackWorkout] = useState("");
+  const [url, setUrl] = useState("");
+
+  const history = useHistory();
+
+  const {
+    value: enteredTitle,
+    isValid: enteredTitleIsValid,
+    valueChangeHandler: titleChangeHandler,
+    hasError: titleHasError,
+    inputBlurHandler: titleBlurHandler,
+  } = useInput(hasAtLeastFiveLetters);
+
+  const {
+    value: enteredSpecifiedWorkout,
+    isValid: enteredSpecifiedWorkoutIsValid,
+    valueChangeHandler: specifiedWorkoutChangeHandler,
+    hasError: specifiedWorkoutHasError,
+    inputBlurHandler: specifiedWorkoutBlurHandler,
+  } = useInput(hasAtLeastFiveLetters);
+
   const params = useParams<paramTypes>();
   const { day, month } = params;
 
@@ -36,38 +70,139 @@ const DayDetail: React.FC = () => {
   let monthToNumber = parseInt(month) - 1;
   let monthName = monthNames[monthToNumber];
 
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!enteredTitleIsValid && !enteredSpecifiedWorkoutIsValid) {
+      return;
+    }
+
+    const workoutPlan: workoutPlan = {
+      specifiedDay: day,
+      specifiedMonth: monthName,
+      title: enteredTitle,
+      bodyWorkout: {
+        legs: legsWorkout,
+        glutes: glutesWorkout,
+        abs: absWorkout,
+        arms: armsWorkout,
+        back: backWorkout,
+      },
+      details: enteredSpecifiedWorkout,
+      video: url,
+    };
+    addWorkout(workoutPlan);
+    history.push("/calendar");
+  };
+
+  async function addWorkout(workoutPlan: workoutPlan) {
+    const response = await fetch(
+      "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
+      {
+        method: "POST",
+        body: JSON.stringify(workoutPlan),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+  }
+
+  const legsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setLegsWorkout(event.target.value);
+  };
+
+  const glutesWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setGlutesWorkout(event.target.value);
+  };
+
+  const absWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setAbsWorkout(event.target.value);
+  };
+
+  const armsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setArmsWorkout(event.target.value);
+  };
+
+  const backWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setBackWorkout(event.target.value);
+  };
+
+  const urlWorkoutHanlder = (event: ChangeEvent<HTMLInputElement>) => {
+    setUrl(event.target.value);
+  };
+
+  const titleInputStyles = titleHasError ? styles.invalid : "";
+  const specifiedWorkoutInputStyles = specifiedWorkoutHasError
+    ? styles.invalid
+    : "";
+
   return (
     <>
       <div className={styles.Frame}>
         <div className={styles.Header}>
-          <div className={styles.Day}>{day}</div>
+          <div className={styles.Day}>{day}th</div>
           <div className={styles.Month}>{monthName}</div>
         </div>
         <div className={styles.Form}>
-          <form>
-            <label htmlFor="title" className={styles.TextInput_label}>
-              Title
-            </label>
-            <input
-              type="input"
-              className={styles.TextInput}
-              id="title"
-              required
-            />
+          <form onSubmit={submitHandler}>
+            <div className={`${titleInputStyles}`}>
+              <label htmlFor="title" className={styles.TextInput_label}>
+                Title
+              </label>
+              <input
+                type="input"
+                className={styles.TextInput}
+                id="title"
+                required
+                value={enteredTitle}
+                onChange={titleChangeHandler}
+                onBlur={titleBlurHandler}
+              />
+            </div>
             <div className={styles.RadioInput}>
               <span>Type of exercise</span>
-              <input type="radio" value="legs" id="legs" />
+              <input
+                type="radio"
+                value="legs"
+                id="legs"
+                onChange={legsWorkoutHandler}
+              />
               <label htmlFor="legs">Legs</label>
-              <input type="radio" value="glutes" id="glutes" />
+              <input
+                type="radio"
+                value="glutes"
+                id="glutes"
+                onChange={glutesWorkoutHandler}
+              />
               <label htmlFor="glutes">Glutes</label>
-              <input type="radio" value="abs" id="abs" />
+              <input
+                type="radio"
+                value="abs"
+                id="abs"
+                onChange={absWorkoutHandler}
+              />
               <label htmlFor="abs">Abs</label>
-              <input type="radio" value="arms" id="arms" />
+              <input
+                type="radio"
+                value="arms"
+                id="arms"
+                onChange={armsWorkoutHandler}
+              />
               <label htmlFor="arms">Arms</label>
-              <input type="radio" value="back" id="back" />
+              <input
+                type="radio"
+                value="back"
+                id="back"
+                onChange={backWorkoutHandler}
+              />
               <label htmlFor="back">Back</label>
             </div>
-            <div className={styles.SpecifiedWorkout}>
+            <div
+              className={`${styles.SpecifiedWorkout} ${specifiedWorkoutInputStyles}`}
+            >
               <label htmlFor="specifiedWorkout" className={styles.Label}>
                 Specified Workout
               </label>
@@ -75,15 +210,23 @@ const DayDetail: React.FC = () => {
                 type="text"
                 id="specifiedWorkout"
                 className={styles.TextInput}
+                value={enteredSpecifiedWorkout}
+                onChange={specifiedWorkoutChangeHandler}
+                onBlur={specifiedWorkoutBlurHandler}
               />
             </div>
             <div className={styles.VideoInput}>
               <label htmlFor="video" className={styles.Label}>
                 Helpful video
               </label>
-              <input type="url" id="video" className={styles.TextInput} />
+              <input
+                type="url"
+                id="video"
+                className={styles.TextInput}
+                onChange={urlWorkoutHanlder}
+              />
             </div>
-            <button type="submit">
+            <button>
               <span>Submit</span>
             </button>
           </form>
