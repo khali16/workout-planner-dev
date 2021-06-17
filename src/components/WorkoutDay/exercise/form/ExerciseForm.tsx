@@ -23,6 +23,15 @@ export interface workoutPlan {
   time?: number;
 }
 
+interface User {
+  //todo backend layer
+  login: string;
+  password: string;
+  workouts: workoutPlanKubi[];
+  firstName: string;
+  lastName: string;
+}
+
 export interface workoutPlanKubi {
   specifiedDay: string;
   specifiedMonth: string;
