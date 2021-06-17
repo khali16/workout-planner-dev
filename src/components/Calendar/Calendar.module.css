@@ -1,0 +1,135 @@
+.Frame {
+  width: 1200px;
+  height: auto;
+  border: 2px solid #395e60;
+  background-color: #80b1b3;
+  box-shadow: 2px 2px 2px #395e60;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+
+.Header {
+  font-size: 48px;
+  font-weight: bold;
+  padding: 10px 10px 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #80b1b3;
+  color: #263f40;
+  border-radius: 10px;
+}
+
+.Button1 {
+  border: 3px solid #395e60;
+  background-color: #263f40;
+  border: none;
+  font-size: 28px;
+  color: #ffffff;
+  padding: 20px;
+  width: 150px;
+  margin: auto;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.Button1 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.Button1 span:after {
+  content: "\00ab";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.Button1:hover span {
+  padding-right: 25px;
+}
+
+.Button1:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+/* drugi button*/
+.Button {
+  border: 3px solid #263f40;
+  background-color: #263f40;
+  border: none;
+  font-size: 28px;
+  color: #ffffff;
+  padding: 20px;
+  width: 150px;
+  margin: auto;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.Button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.Button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: -20px;
+  transition: 0.5s;
+}
+
+.Button:hover span {
+  padding-left: 25px;
+}
+
+.Button:hover span:after {
+  opacity: 1;
+  left: 0;
+}
+
+.Months {
+  text-align: center;
+}
+
+.DaysName {
+  width: 100%;
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 170px 170px 170px 170px 170px 170px 170px;
+  font-size: 25px;
+  text-align: center;
+  color: #263f40;
+}
+
+.Days {
+  width: 100%;
+  margin-top: 25px;
+  margin-left: 18px;
+  display: grid;
+  grid-template-columns: 160px 160px 160px 160px 160px 160px 160px;
+  text-align: center;
+  font-size: 50px;
+  grid-gap: 7px;
+  color: #263f40;
+}
+
+.Day {
+  background-color: #afcecf;
+  cursor: pointer;
+  height: 170px;
+}

@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Calendar from "./components/Calendar/Calendar";
+import DayDetail from "./components/Calendar/DayDetail";
+import LoginForm from "./components/Forms/LoginForm";
+import SignUpForm from "./components/Forms/SignUpForm";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <LoginForm />
+        </Route>
+        <Route path="/login">
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up">
+          <SignUpForm />
+        </Route>
+        <Route path="/calendar/:month/:day">
+          <DayDetail />
+        </Route>
+        <Route path="/calendar">
+          <Calendar />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 
