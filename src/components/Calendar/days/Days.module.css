@@ -1,0 +1,43 @@
+.Days {
+    width: 100%;
+    margin-top: 25px;
+    margin-left: 18px;
+    display: grid;
+    grid-template-columns: 160px 160px 160px 160px 160px 160px 160px;
+    text-align: center;
+    font-size: 50px;
+    grid-gap: 7px;
+    color: #263f40;
+}
+
+
+.Day {
+    background-color: #afcecf;
+    cursor: pointer;
+    height: 170px;
+}
+
+.DaysName {
+    width: 100%;
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: 170px 170px 170px 170px 170px 170px 170px;
+    font-size: 25px;
+    text-align: center;
+    color: #263f40;
+}
+.Frame {
+    width: 1200px;
+    height: auto;
+    border: 2px solid #395e60;
+    background-color: #80b1b3;
+    box-shadow: 2px 2px 2px #395e60;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 10px;
+}
+
+
+.Months {
+    text-align: center;
+}
