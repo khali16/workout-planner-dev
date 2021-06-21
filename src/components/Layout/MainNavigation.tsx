@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+//@ts-ignore
 import styles from "./MainNavigation.module.css";
+import AuthContext from "../../store/auth-context";
 
 const MainNavigation = () => {
+  const authContext = useContext(AuthContext);
+
+  const isLoggedIn = authContext.isLoggedIn;
+
+  const logoutHandler = () => {
+    authContext.logout();
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -12,21 +22,30 @@ const MainNavigation = () => {
       </div>
       <nav className={styles.nav}>
         <ul>
-          <li>
-            <NavLink to="/login" activeClassName={styles.active}>
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/sign-up" activeClassName={styles.active}>
-              Sign up
-            </NavLink>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <NavLink to="/login" activeClassName={styles.active}>
+                Login
+              </NavLink>
+            </li>
+          )}
+          {!isLoggedIn && (
+            <li>
+              <NavLink to="/sign-up" activeClassName={styles.active}>
+                Sign up
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/calendar" activeClassName={styles.active}>
               Calendar
             </NavLink>
           </li>
+          {isLoggedIn && (
+            <li>
+              <button onClick={logoutHandler}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

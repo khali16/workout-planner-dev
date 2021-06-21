@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./SignUpForm.module.css";
 import useInput from "../../hooks/useInput";
-import {
-  isNotEmpty,
-  isEmail,
-  passwordValidator,
-} from "../../utils/validation";
+import { isNotEmpty, isEmail, passwordValidator } from "../../utils/validation";
+import AuthContext from "../../store/auth-context";
+import { useHistory } from "react-router-dom";
 
 const SignUpForm = () => {
+  const history = useHistory();
+  const authContext = useContext(AuthContext);
+
   const {
     value: firstName,
     isValid: nameIsValid,
@@ -57,10 +58,43 @@ const SignUpForm = () => {
     }
     console.log(firstName, lastName, email, password);
 
-    nameReset();
-    lastNameReset();
-    emailReset();
-    passwordReset();
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApa1WrZ97H3bjYtU-rlQzjOoFs_9HT7PI",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+          displayName: firstName,
+          lastName: lastName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then(() => {
+            let errorMessage = "Authentication failed!";
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .then((data) => {
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000
+        );
+        // @ts-ignore
+        authContext.login(data.idToken, expirationTime.toISOString());
+        history.replace("/");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const nameInputStyles = nameHasError ? styles.invalid : "";

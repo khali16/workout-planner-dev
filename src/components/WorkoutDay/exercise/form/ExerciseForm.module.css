@@ -1,6 +1,6 @@
 .Frame {
   width: 1200px;
-  height: 600px;
+  height: 720px;
   border: 2px solid #222222;
   background-color: #263f40;
   margin: auto;
@@ -142,6 +142,16 @@
 
 .SpecifiedWorkout {
   margin-top: 50px;
+}
+
+.SecondsInput {
+  margin-top: 50px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .VideoInput {

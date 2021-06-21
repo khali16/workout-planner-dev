@@ -18,6 +18,7 @@ export interface workoutPlan {
     arms: string;
     back: string;
   };
+  secondsOfExercise?: number;
   details?: string;
   video?: string;
   time?: number;
@@ -54,6 +55,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
   const [absWorkout, setAbsWorkout] = useState("");
   const [armsWorkout, setArmsWorkout] = useState("");
   const [backWorkout, setBackWorkout] = useState("");
+  const [seconds, setSeconds] = useState<number>();
   const [url, setUrl] = useState("");
 
   const history = useHistory();
@@ -94,6 +96,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
     //     arms: armsWorkout,
     //     back: backWorkout,
     //   },
+    // secondsOfExercise: seconds,
     //   details: enteredSpecifiedWorkout,
     //   video: url,
     // };
@@ -150,6 +153,11 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
 
   const backWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBackWorkout(event.target.value);
+  };
+
+  const secondsOfExerciseHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const secondsString = event.target.value;
+    setSeconds(parseFloat(secondsString));
   };
 
   const urlWorkoutHanlder = (event: ChangeEvent<HTMLInputElement>) => {
@@ -221,6 +229,17 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
                 onChange={backWorkoutHandler}
               />
               <label htmlFor="back">Back</label>
+            </div>
+            <div className={styles.SecondsInput}>
+              <label htmlFor="seconds" className={styles.TextInput_label}>
+                Seconds of exercise
+              </label>
+              <input
+                type="number"
+                className={styles.TextInput}
+                value={seconds}
+                onChange={secondsOfExerciseHandler}
+              />
             </div>
             <div
               className={`${styles.SpecifiedWorkout} ${specifiedWorkoutInputStyles}`}
