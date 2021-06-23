@@ -1,15 +1,11 @@
 import React from "react";
 import { useField, FieldAttributes } from "formik";
 import { TextField } from "@material-ui/core";
-import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-  withStyles,
-} from "@material-ui/core/styles";
-import classNames from "classnames";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
 const TextFields: React.FC<FieldAttributes<{}>> = ({
   placeholder,
+  type,
   ...props
 }) => {
   const theme = createMuiTheme({
@@ -35,7 +31,9 @@ const TextFields: React.FC<FieldAttributes<{}>> = ({
       <TextField
         style={{ width: "80%" }}
         placeholder={placeholder}
+        type={type}
         {...field}
+        autoComplete="off"
       />
     </ThemeProvider>
   );
