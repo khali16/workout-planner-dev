@@ -1,61 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./SignUpForm.module.css";
-import useInput from "../../hooks/useInput";
-import { isNotEmpty, isEmail, passwordValidator } from "../../utils/validation";
 import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
+import { Formik, Form } from "formik";
+import { TextField } from "@material-ui/core";
+import * as Yup from "yup";
+import TextFields from "../WorkoutDay/exercise/form/TextFields";
+import { FirebaseAuthContext } from "../../firebase/firebase-context";
 
 const SignUpForm = () => {
   const history = useHistory();
   const authContext = useContext(AuthContext);
+  const firebaseContext = useContext(FirebaseAuthContext);
+  const [error, setError] = useState("");
 
-  const {
-    value: firstName,
-    isValid: nameIsValid,
-    hasError: nameHasError,
-    valueChangeHandler: nameChangeHandler,
-    inputBlurHandler: nameBlurHandler,
-    reset: nameReset,
-  } = useInput(isNotEmpty);
-
-  const {
-    value: lastName,
-    isValid: lastNameIsValid,
-    hasError: lastNameHasError,
-    valueChangeHandler: lastNameChangeHandler,
-    inputBlurHandler: lastNameBlurHandler,
-    reset: lastNameReset,
-  } = useInput(isNotEmpty);
-
-  const {
-    value: email,
-    isValid: emailIsValid,
-    hasError: emailHasError,
-    valueChangeHandler: emailChangeHandler,
-    inputBlurHandler: emailBlurHandler,
-    reset: emailReset,
-  } = useInput(isEmail);
-
-  const {
-    value: password,
-    isValid: passwordIsValid,
-    hasError: passwordHasError,
-    valueChangeHandler: passwordChangeHandler,
-    inputBlurHandler: passwordBlurHandler,
-    reset: passwordReset,
-  } = useInput(passwordValidator);
-
-  let formIsValid = false;
-  if (nameIsValid && lastNameIsValid && emailIsValid && passwordIsValid) {
-    formIsValid = true;
-  }
-
-  const submitHanlder = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!formIsValid) {
-      return;
-    }
+  async function submitHandler(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) {
     console.log(firstName, lastName, email, password);
 
     fetch(
@@ -95,67 +59,119 @@ const SignUpForm = () => {
       .catch((error) => {
         alert(error.message);
       });
-  };
+  }
 
-  const nameInputStyles = nameHasError ? styles.invalid : "";
-  const lastNameInputStyles = lastNameHasError ? styles.invalid : "";
-  const emailInputStyles = emailHasError ? styles.invalid : "";
-  const passwordInputStyles = passwordHasError ? styles.invalid : "";
+  const Schema = Yup.object().shape({
+    firstName: Yup.string()
+      .required("Please, enter your first name")
+      .min(3, "Your name should have at least 3 letters"),
+    lastName: Yup.string()
+      .required("Please, enter your last name")
+      .min(3, "Your name should have at least 3 letters"),
+    email: Yup.string().email().required("Please, enter valid email"),
+    password: Yup.string()
+      .required("Please, enter your password")
+      .matches(
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        "Password must contain: at least 8 characters, one uppercase, one number and one special case character."
+      ),
+    confirmPassword: Yup.string()
+      .required("Please confirm your password")
+      .when("password", {
+        //@ts-ignore
+        is: (password) => (password && password.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref("password")],
+          "Password doesn't match"
+        ),
+      }),
+  });
 
   return (
-    <form className={styles.Form} onSubmit={submitHanlder}>
-      <div className={`${nameInputStyles}`}>
-        <label htmlFor="firstName" className={styles.FormInput_label}>
-          First Name
-        </label>
-        <input
-          type="text"
-          value={firstName}
-          onChange={nameChangeHandler}
-          onBlur={nameBlurHandler}
-          className={styles.FormInput}
-        />
-      </div>
-      <div className={`${lastNameInputStyles}`}>
-        <label htmlFor="lastName" className={styles.FormInput_label}>
-          Last Name
-        </label>
-        <input
-          type="text"
-          value={lastName}
-          onChange={lastNameChangeHandler}
-          onBlur={lastNameBlurHandler}
-          className={styles.FormInput}
-        />
-      </div>
-      <div className={`${emailInputStyles}`}>
-        <label htmlFor="email" className={styles.FormInput_label}>
-          E-Mail
-        </label>
-        <input
-          type="email"
-          value={email}
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
-          className={styles.FormInput}
-        />
-      </div>
-      <div className={`${styles.selectedFormItem} ${passwordInputStyles}`}>
-        <label htmlFor="password" className={styles.FormInput_label}>
-          Password
-        </label>
-        <input
-          type="password"
-          value={password}
-          onChange={passwordChangeHandler}
-          onBlur={passwordBlurHandler}
-          className={styles.FormInput}
-        />
-      </div>
-      <button>
-        <span>Sign Up</span>
-      </button>
-    </form>
+    <div className={styles.Frame}>
+      <Formik
+        validateOnChange={true}
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        onSubmit={(values) => {
+          submitHandler(
+            values.firstName,
+            values.lastName,
+            values.email,
+            values.password
+          );
+        }}
+        validationSchema={Schema}
+      >
+        {({ errors, touched }) => (
+          <Form autoComplete="off">
+            <div className={styles.Form}>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="First Name"
+                  name="firstName"
+                  type="text"
+                  as={TextField}
+                />
+                {errors.firstName && touched.firstName ? (
+                  <p>{errors.firstName}</p>
+                ) : null}
+              </div>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="Last Name"
+                  name="lastName"
+                  type="text"
+                  as={TextField}
+                />
+                {errors.lastName && touched.lastName ? (
+                  <p>{errors.lastName}</p>
+                ) : null}
+              </div>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="E-Mail"
+                  name="email"
+                  type="email"
+                  as={TextField}
+                />
+                {errors.email && touched.email ? <p>{errors.email}</p> : null}
+              </div>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  as={TextField}
+                />
+                {errors.password && touched.password ? (
+                  <p>{errors.password}</p>
+                ) : null}
+              </div>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  as={TextField}
+                />
+                {errors.confirmPassword && touched.confirmPassword ? (
+                  <p>{errors.confirmPassword}</p>
+                ) : null}
+              </div>
+              <button type="submit">
+                <span>Sign Up</span>
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

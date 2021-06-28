@@ -1,69 +1,18 @@
-.Form {
-  width: 800px;
-  height: 450px;
+.Frame {
+  width: 1000px;
+  height: 700px;
   border: 2px solid #222222;
   background-color: #263f40;
-  margin: auto;
   margin-top: 50px;
   border-radius: 10px;
   position: relative;
   padding: 15px 0 0;
-  width: 1000px;
+  margin: auto;
+  margin-top: 40px;
 }
 
-.Form label {
-  font-size: larger;
-  margin-right: 15px;
-}
-
-.FormInput {
-  margin-top: 15px;
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid #9b9b9b;
-  outline: 0;
-  font-size: 1.3rem;
-  color: #fff;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-
-.FormInput input::placeholder {
-  color: transparent;
-}
-
-.FormInput input:placeholder-shown ~ .form__label {
-  font-size: 1.3rem;
-  cursor: text;
-  top: 20px;
-}
-
-.FormInput_label {
-  font-size: 1rem;
-  color: #9b9b9b;
-  margin-top: 15px;
-}
-
-.FormInput:focus {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, #11998e, #38ef7d);
-  border-image-slice: 1;
-}
-
-.TextInput_label:focus {
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: #11998e;
-  font-weight: 700;
-}
-
-.FormInput:required:invalid {
-  box-shadow: none;
+.Form {
+  margin-top: 50px;
 }
 
 .Form button {
@@ -74,12 +23,12 @@
   text-align: center;
   font-size: 28px;
   padding: 20px;
-  width: 170px;
+  width: 200px;
   transition: all 0.5s;
   cursor: pointer;
   float: right;
   margin-right: 40px;
-  margin-top: 20px;
+  margin-top: 200px;
 }
 
 .Form button span {
@@ -107,10 +56,10 @@
   right: 0;
 }
 
-.invalid input {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, red, pink);
-  border-image-slice: 1;
+.InputField {
+  margin-top: 50px;
+}
+
+.InputField p {
+  color: #f05c79;
 }

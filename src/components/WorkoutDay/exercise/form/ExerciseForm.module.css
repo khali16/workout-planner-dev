@@ -1,11 +1,14 @@
 .Frame {
-  width: 1200px;
-  height: 720px;
+  width: 1000px;
+  height: 650px;
   border: 2px solid #222222;
   background-color: #263f40;
-  margin: auto;
   margin-top: 50px;
   border-radius: 10px;
+  position: relative;
+  padding: 15px 0 0;
+  margin: auto;
+  margin-top: 40px;
 }
 .Header {
   font-size: 48px;
@@ -25,142 +28,28 @@
   margin-left: 7px;
 }
 
-.Frame {
-  position: relative;
-  padding: 15px 0 0;
-  width: 1000px;
-  margin: auto;
+.Form {
+  margin-top: 50px;
+}
+
+.Form label {
+  font-size: 1rem;
+  color: #9b9b9b;
+  margin-left: 30px;
+}
+
+.InputField {
   margin-top: 40px;
+  margin-left: 30px;
 }
 
-.Frame label {
-  font-size: larger;
-  margin-bottom: 0.5rem;
-  margin-right: 15px;
+.InputField p {
+  color: #f05c79;
 }
 
-.TextInput {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid #9b9b9b;
-  outline: 0;
-  font-size: 1.3rem;
-  color: #fff;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-
-.TextInput input::placeholder {
-  color: transparent;
-}
-
-.TextInput input:placeholder-shown ~ .form__label {
-  font-size: 1.3rem;
-  cursor: text;
-  top: 20px;
-}
-
-.TextInput_label {
-  font-size: 1rem;
-  color: #9b9b9b;
-}
-
-.TextInput:focus {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, #11998e, #38ef7d);
-  border-image-slice: 1;
-}
-
-.TextInput_label:focus {
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: #11998e;
-  font-weight: 700;
-}
-
-.TextInput:required:invalid {
-  box-shadow: none;
-}
-
-.RadioInput {
-  font-family: inherit;
-  width: 100%;
-  margin-top: 50px;
-  border: 0;
-  border-bottom: 2px solid #9b9b9b;
-  outline: 0;
-  color: #fff;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-
-.RadioInput span {
-  font-size: 20px;
-  color: #9b9b9b;
-}
-
-.RadioInput label {
-  font-size: 25px;
-  margin-left: 5px;
-}
-
-.RadioInput input[type="radio"] {
-  display: none;
-}
-
-.RadioInput input[type="radio"] + *::before {
-  content: "";
-  display: inline-block;
-  vertical-align: bottom;
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.3rem;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 0.1rem;
-  border-color: gray;
-  margin-left: 50px;
-}
-.RadioInput input[type="radio"]:checked + * {
-  color: #11998e;
-}
-.RadioInput input[type="radio"]:checked + *::before {
-  background: radial-gradient(
-    #11998e 0%,
-    #11998e 40%,
-    transparent 50%,
-    transparent
-  );
-  border-color: #11998e;
-}
-
-.SpecifiedWorkout {
-  margin-top: 50px;
-}
-
-.SecondsInput {
-  margin-top: 50px;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.VideoInput {
-  margin-top: 50px;
-}
-
-.Label {
-  font-size: 20px;
-  color: #9b9b9b;
+.Error {
+  margin-left: 30px;
+  color: #f05c79;
 }
 
 .Frame button {
@@ -202,12 +91,4 @@ input[type="number"]::-webkit-outer-spin-button {
 .Frame button:hover span:after {
   opacity: 1;
   right: 0;
-}
-
-.invalid input {
-  padding-bottom: 6px;
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, red, pink);
-  border-image-slice: 1;
 }

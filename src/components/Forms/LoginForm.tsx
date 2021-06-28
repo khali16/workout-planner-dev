@@ -1,50 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styles from "./LoginForm.module.css";
-import useInput from "../../hooks//useInput";
-import {
-  hasAtLeastFiveLetters,
-  passwordValidator,
-} from "../../utils/validation";
 import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
+import { Formik, Form } from "formik";
+import { TextField } from "@material-ui/core";
+import * as Yup from "yup";
+import TextFields from "../WorkoutDay/exercise/form/TextFields";
 
 const LoginForm = () => {
   const authContext = useContext(AuthContext);
   const history = useHistory();
 
-  const {
-    value: enteredLogin,
-    isValid: loginIsValid,
-    hasError: loginHasError,
-    valueChangeHandler: loginChangeHandler,
-    inputBlurHandler: loginBlurHandler,
-    reset: loginReset,
-  } = useInput(hasAtLeastFiveLetters);
-
-  const {
-    value: enteredPassword,
-    isValid: passwordIsValid,
-    hasError: passwordHasError,
-    valueChangeHandler: passwordChangeHandler,
-    inputBlurHandler: passwordBlurHandler,
-    reset: passwordReset,
-  } = useInput(passwordValidator);
-
-  const submitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!loginIsValid) {
-      return;
-    }
-    console.log(enteredLogin, enteredPassword);
-
+  const submitHandler = (email: string, password: string) => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApa1WrZ97H3bjYtU-rlQzjOoFs_9HT7PI",
       {
         method: "POST",
         body: JSON.stringify({
-          email: enteredLogin,
-          password: enteredPassword,
+          email: email,
+          password: password,
           returnSecureToken: true,
         }),
         headers: {
@@ -76,41 +50,55 @@ const LoginForm = () => {
       });
   };
 
-  const loginInputStyles = loginHasError ? styles.invalid : "";
-  const passwordInputStyles = passwordHasError ? styles.invalid : "";
+  const Schema = Yup.object().shape({
+    email: Yup.string().email().required("Please, enter valid email"),
+    password: Yup.string().required("Please, enter valid password"),
+  });
 
   return (
-    <form className={styles.Form} onSubmit={submitHandler}>
-      <div className={`${loginInputStyles}`}>
-        <label htmlFor="login" className={styles.TextInput_label}>
-          Login
-        </label>
-        <input
-          type="text"
-          id="login"
-          value={enteredLogin}
-          onChange={loginChangeHandler}
-          onBlur={loginBlurHandler}
-          className={styles.FormInput}
-        />
-      </div>
-      <div className={`${passwordInputStyles}`}>
-        <label htmlFor="password" className={styles.TextInput_label}>
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          className={styles.FormInput}
-          value={enteredPassword}
-          onChange={passwordChangeHandler}
-          onBlur={passwordBlurHandler}
-        />
-      </div>
-      <button>
-        <span>Save</span>
-      </button>
-    </form>
+    <div className={styles.Frame}>
+      <Formik
+        validateOnChange={true}
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={(values) => {
+          submitHandler(values.email, values.password);
+        }}
+        validationSchema={Schema}
+      >
+        {({ errors, touched }) => (
+          <Form>
+            <div className={styles.Form}>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="E-mail"
+                  name="email"
+                  type="email"
+                  as={TextField}
+                />
+                {errors.email && touched.email ? <p>{errors.email}</p> : null}
+              </div>
+              <div className={styles.InputField}>
+                <TextFields
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  as={TextField}
+                />
+                {errors.password && touched.password ? (
+                  <p>{errors.password}</p>
+                ) : null}
+              </div>
+              <button type="submit">
+                <span>Login</span>
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

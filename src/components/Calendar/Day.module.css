@@ -7,3 +7,9 @@
 .nonDay {
   background-color: transparent;
 }
+
+.CurrentDay {
+  background-color: #263f40;
+  opacity: 0.3;
+  color: #52e896;
+}
