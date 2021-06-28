@@ -1,12 +1,8 @@
 import React from "react";
 import { Field } from "formik";
-import { Checkbox, Radio } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 import styles from "./BodyPartToExercise.module.css";
-import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-} from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const BodyPartToExercise = () => {
   const theme = createMuiTheme({
