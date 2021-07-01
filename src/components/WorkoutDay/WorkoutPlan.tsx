@@ -5,10 +5,12 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 
 import { workoutPlanKubi } from "./exercise/form/ExerciseForm";
-import { useState } from "react";
-import ExerciseRenderer from "./exercise/ExerciseRenderer";
+import React, { useState } from "react";
 import { Exercise } from "../../constants/interfaces";
 import { useCurrentDate } from "../../hooks/useCurrentDate";
+import ExerciseView from "./exercise/view/ExerciseView";
+import Modal from "../UI/Modal";
+import ExerciseForm from "../WorkoutDay/exercise/form/ExerciseForm";
 
 interface OwnProps {}
 
@@ -20,44 +22,34 @@ const initializeEmptyWorkoutPlan = (): workoutPlanKubi => ({
   specifiedMonth: "",
   time: 0,
   title: "Plan treningu",
-  exercises: [{ title: "", finished: false }],
+  exercises: [],
 });
 
 const WorkoutPlan: React.FC<Props> = (props) => {
+  const [modalIsShown, setModalIsShown] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [closeModal, setCloseModal] = useState();
+
   const { day, monthName } = useCurrentDate();
   const [workoutPlan, setWorkoutPlan] = useState<workoutPlanKubi>({
     ...initializeEmptyWorkoutPlan(),
     specifiedMonth: monthName,
     specifiedDay: day,
   });
-  async function addWorkout() {
-    const newWorkout: workoutPlanKubi = {
-      ...workoutPlan,
-      isCyclical: { days: [] },
-      // @ts-ignore
-      time: workoutPlan.exercises.reduce(
-        // @ts-ignore
-        ({ totalTime: currentTime }, { totalTime }) => currentTime + totalTime
-      ),
-    };
-    setWorkoutPlan({ ...newWorkout });
-    // const response = await fetch(
-    //   "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify(workoutPlan),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const data = await response.json();
-  }
-
   const addNewExercise = (newExercise: Exercise) => ({
     ...workoutPlan,
     exercises: [...workoutPlan.exercises, newExercise],
   });
+
+  const onShowModal = () => {
+    setModalIsShown(true);
+  };
+
+  const hideModal = () => {
+    //@ts-ignore
+    setModalIsShown(false);
+  };
+
   return (
     <div>
       Tytul: {workoutPlan.title}
@@ -66,20 +58,28 @@ const WorkoutPlan: React.FC<Props> = (props) => {
       Czas w sekundkach: {workoutPlan.time}
       <VerticalTimeline>
         {workoutPlan.exercises.map((exercise) => (
-          <ExerciseRenderer exercise={exercise} addExercise={addNewExercise} />
+          <ExerciseView exercise={exercise} />
         ))}
         <VerticalTimelineElement
           iconStyle={{ background: "rgb(100, 104, 252)", color: "#fff" }}
           iconOnClick={() => {
-            console.log(workoutPlan);
-            let addNewExercise = {
-              ...workoutPlan,
-              exercises: [
-                ...workoutPlan.exercises,
-                ...initializeEmptyWorkoutPlan().exercises,
-              ],
-            };
-            setWorkoutPlan(addNewExercise);
+            onShowModal;
+            // alert("Stwórz tutaj modal ktory wyrendereuje ExerciseForm a na onSubmitcie doda exercise do statea" +
+            //     " komponentu WorkoutPlan za pomocą setWorkoutPlan (na statcie jest obiekt workoutPlan, ktory ma" +
+            //     " tablice exercises)")
+            //W modalu <ExerciseForm/>
+            //
+
+            //olej ten kod
+            // addWorkout(workoutPlan);
+            // let addNewExercise = {
+            //   ...workoutPlan,
+            //   exercises: [
+            //     ...workoutPlan.exercises,
+            //     ...initializeEmptyWorkoutPlan().exercises,
+            //   ],
+            // };
+            // setWorkoutPlan(addNewExercise);
           }}
         >
           Add exercise
@@ -87,12 +87,18 @@ const WorkoutPlan: React.FC<Props> = (props) => {
         <VerticalTimelineElement
           iconStyle={{ background: "rgb(16, 204, 82)", color: "#fff" }}
           iconOnClick={() => {
+            alert("Olej to");
             // addWorkout(workoutPlan);
           }}
         >
           Save training!
         </VerticalTimelineElement>
       </VerticalTimeline>
+      <button onClick={onShowModal}>HOP</button>
+      {modalIsShown && (
+        //@ts-ignore
+        <Modal closeModal={hideModal}></Modal>
+      )}
     </div>
   );
 };

@@ -49,9 +49,14 @@ export interface workoutPlanKubi {
 interface OwnProps {
   addExercise: (exercise: Exercise) => {};
   setEditMode: (bool: boolean) => {};
+  hideModal: () => boolean;
 }
 
-const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
+const ExerciseForm: React.FC<OwnProps> = ({
+  addExercise,
+  setEditMode,
+  hideModal,
+}) => {
   const history = useHistory();
 
   const { day, monthName } = useCurrentDate();
@@ -122,6 +127,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
               url: "",
             }}
             onSubmit={(data) => {
+              hideModal;
               console.log(data);
             }}
             validationSchema={Schema}
@@ -136,6 +142,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
             }) => (
               <Form>
                 <label>Body part to exercise:</label>
+                <br />
                 <BodyPartToExercise />
                 {errors.typeOfExercise && touched.typeOfExercise ? (
                   <p className={styles.Error}>{errors.typeOfExercise}</p>
@@ -169,7 +176,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
                   />
                   {errors.url && touched.url ? <p>{errors.url}</p> : null}
                 </div>
-                <button type="submit">
+                <button type="submit" onClick={hideModal}>
                   <span>Submit</span>
                 </button>
               </Form>
