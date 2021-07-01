@@ -22,9 +22,10 @@ const ExerciseView: FunctionComponent<Props> = ({
   },
 }) => {
   // @ts-ignore
-  const tytulec = `${Object.values(engagedBodyParts)
-    .filter((bodyPart) => bodyPart.checked)
-    .map((bodyPart) => " " + bodyPart.title)} ${totalTime} sekund :)`;
+  // const tytulec = `${Object.values(engagedBodyParts)
+  //   .filter((bodyPart) => bodyPart.checked)
+  //   .map((bodyPart) => " " + bodyPart.title)} ${totalTime} sekund :)`;
+  const tytulec = `Elo sekund :)`;
   const [exerciseIconColor, setExerciseIconColor] = useState(
     finished ? doneExerciseColor : todoExerciseColor
   );
