@@ -16,6 +16,7 @@ const LoginForm = () => {
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApa1WrZ97H3bjYtU-rlQzjOoFs_9HT7PI",
       {
         method: "POST",
+        redirect: 'follow',
         body: JSON.stringify({
           email: email,
           password: password,
@@ -27,8 +28,9 @@ const LoginForm = () => {
       }
     )
       .then((res) => {
+        history.replace("/calendar")
         if (res.ok) {
-          return res.json();
+          return res.json()
         } else {
           return res.json().then(() => {
             let errorMessage = "Authentication failed!";
@@ -41,9 +43,9 @@ const LoginForm = () => {
         const expirationTime = new Date(
           new Date().getTime() + +data.expiresIn * 1000
         );
+        console.log(expirationTime)
         // @ts-ignore
         authContext.login(data.idToken, expirationTime.toISOString());
-        history.replace("/");
       })
       .catch((error) => {
         alert(error.message);

@@ -47,17 +47,7 @@ export const AuthContextProvider = (props) => {
   const [token, setToken] = useState(initialToken);
 
   const userIsLoggedIn = !!token;
-/*TODO: Po co callback??
-  const logoutHandler = useCallback(() => {
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationTime");
 
-    if (logoutTimer) {
-      clearTimeout(logoutTimer);
-    }
-  }, []);
-  */
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");

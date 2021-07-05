@@ -6,13 +6,10 @@ import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
-import { FirebaseAuthContext } from "../../firebase/firebase-context";
 
 const SignUpForm = () => {
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  const firebaseContext = useContext(FirebaseAuthContext);
-  const [error, setError] = useState("");
 
   async function submitHandler(
     firstName: string,
@@ -39,6 +36,7 @@ const SignUpForm = () => {
       }
     )
       .then((res) => {
+        history.replace("/calendar")
         if (res.ok) {
           return res.json();
         } else {
@@ -54,7 +52,6 @@ const SignUpForm = () => {
         );
         // @ts-ignore
         authContext.login(data.idToken, expirationTime.toISOString());
-        history.replace("/");
       })
       .catch((error) => {
         alert(error.message);
