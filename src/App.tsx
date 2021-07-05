@@ -6,6 +6,7 @@ import LoginForm from "./components/Forms/LoginForm";
 import SignUpForm from "./components/Forms/SignUpForm";
 import Layout from "./components/Layout/Layout";
 import WorkoutPlan from "./components/WorkoutDay/WorkoutPlan";
+import { createBrowserHistory } from 'history';
 
 function App() {
   return (

@@ -1,6 +1,7 @@
-import React, { MouseEventHandler, useState } from "react";
+import React from "react";
 import styles from "./Day.module.css";
-import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
+import { useRouteMatch, useHistory} from "react-router-dom";
+
 interface OwnProps {
   index: number;
   day: number;

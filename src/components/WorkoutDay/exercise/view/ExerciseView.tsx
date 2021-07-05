@@ -2,6 +2,8 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { Exercise } from "../../../../constants/interfaces";
+import {useParams} from 'react-router'
+import ExerciseForm from '../form/ExerciseForm';
 
 interface OwnProps {
   exercise: Exercise;
@@ -21,6 +23,9 @@ const ExerciseView: FunctionComponent<Props> = ({
     finished,
   },
 }) => {
+  const dzionek = useParams();
+  console.log(dzionek)
+
   // @ts-ignore
   // const tytulec = `${Object.values(engagedBodyParts)
   //   .filter((bodyPart) => bodyPart.checked)
@@ -33,24 +38,8 @@ const ExerciseView: FunctionComponent<Props> = ({
     //http update koloru exercisea
   }, [exerciseIconColor]);
   return (
-    <VerticalTimelineElement
-      className="vertical-timeline-element--work"
-      date={tytulec}
-      iconOnClick={() => {
-        setExerciseIconColor(
-          exerciseIconColor == doneExerciseColor
-            ? todoExerciseColor
-            : doneExerciseColor
-        );
-      }}
-      iconStyle={{ background: exerciseIconColor, color: "#fff" }}
-    >
-      <h3 className="vertical-timeline-element-title">{title}</h3> <br />
-      <br />
-      <ReactPlayer height={300} width={"100%"} url={video} />
-      <br />
-      <p>{description}</p>
-    </VerticalTimelineElement>
+    //@ts-ignore
+    <ExerciseForm />
   );
 };
 

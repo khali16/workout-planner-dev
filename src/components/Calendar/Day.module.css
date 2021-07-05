@@ -1,5 +1,6 @@
 .Day {
   background-color: #afcecf;
+  opacity: 0.2;
   cursor: pointer;
   height: 170px;
 }
@@ -9,7 +10,7 @@
 }
 
 .CurrentDay {
-  background-color: #263f40;
-  opacity: 0.3;
-  color: #52e896;
+  background-color: #009999;
+  opacity: 0.4;
+  color: white;
 }
