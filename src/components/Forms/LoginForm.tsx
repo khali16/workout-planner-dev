@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styles from "./LoginForm.module.css";
-import AuthContext from "../../store/auth-context";
+import { useAuth } from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
@@ -8,47 +8,17 @@ import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
 
 const LoginForm = () => {
-  const authContext = useContext(AuthContext);
+  const { login } = useAuth();
   const history = useHistory();
 
-  const submitHandler = (email: string, password: string) => {
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApa1WrZ97H3bjYtU-rlQzjOoFs_9HT7PI",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then(() => {
-            let errorMessage = "Authentication failed!";
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        const expirationTime = new Date(
-          new Date().getTime() + +data.expiresIn * 1000
-        );
-        // @ts-ignore
-        authContext.login(data.idToken, expirationTime.toISOString());
-        history.replace("/");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
+  async function submitHandler(email: string, password: string) {
+    try {
+      await login(email, password);
+      console.log("Logged in");
+    } catch {
+      alert("Failer to login");
+    }
+  }
 
   const Schema = Yup.object().shape({
     email: Yup.string().email().required("Please, enter valid email"),

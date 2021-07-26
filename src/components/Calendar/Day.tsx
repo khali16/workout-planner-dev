@@ -1,16 +1,20 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Day.module.css";
 import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
+import firebase from "firebase";
+
 interface OwnProps {
   index: number;
   day: number;
   month: number;
+  workouts: never[];
 }
 
-const Day: React.FC<OwnProps> = ({ index, day, month }: OwnProps) => {
+const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
   let history = useHistory();
   const match = useRouteMatch();
   const rightMonthFigure = month + 1;
+  const [workoutciki, setWorkouts] = useState([]);
 
   const pushToSelectedDayHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();

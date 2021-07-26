@@ -12,13 +12,19 @@ interface OwnProps {
   date: Date;
   month: number;
   startDay: number;
+  workouts: never[];
 }
 
 type Props = OwnProps;
 
-const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
+const Days: FunctionComponent<Props> = ({
+  date,
+  month,
+  startDay,
+  workouts,
+}) => {
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
-
+  //@ts-ignore
   return (
     <>
       <div className={styles.DaysName}>
@@ -35,7 +41,13 @@ const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
             const day = index - (startDay - 2);
             return (
               <>
-                <Day key={day} day={day} index={index} month={month}></Day>
+                <Day
+                  key={day}
+                  day={day}
+                  index={index}
+                  month={month}
+                  workouts={workouts}
+                ></Day>
               </>
             );
           })}

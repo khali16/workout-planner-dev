@@ -3,16 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { AuthContextProvider } from "./store/auth-context";
-import { FirebaseAuthProvider } from "./firebase/firebase-context";
+import { AuthProvider } from "./store/auth-context";
 
 ReactDOM.render(
-  <FirebaseAuthProvider>
-    <AuthContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthContextProvider>
-  </FirebaseAuthProvider>,
+  <AuthProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AuthProvider>,
   document.getElementById("root")
 );
