@@ -69,6 +69,7 @@ const SignUpForm = () => {
             values.email,
             values.password
           );
+          history.push("/calendar");
         }}
         validationSchema={Schema}
       >

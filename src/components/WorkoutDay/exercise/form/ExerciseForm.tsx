@@ -47,17 +47,7 @@ export interface workoutPlanKubi {
   exercises: Exercise[];
 }
 
-interface OwnProps {
-  addExercise: (exercise: Exercise) => {};
-  setEditMode: (bool: boolean) => {};
-  hideModal: () => boolean;
-}
-
-const ExerciseForm: React.FC<OwnProps> = ({
-  addExercise,
-  setEditMode,
-  hideModal,
-}) => {
+const ExerciseForm: React.FC = ({}) => {
   const history = useHistory();
   const { addWorkout } = useAuth();
 
@@ -171,7 +161,7 @@ const ExerciseForm: React.FC<OwnProps> = ({
                   />
                   {errors.url && touched.url ? <p>{errors.url}</p> : null}
                 </div>
-                <button type="submit" onClick={hideModal}>
+                <button type="submit">
                   <span>Submit</span>
                 </button>
               </Form>

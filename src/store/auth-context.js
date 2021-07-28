@@ -42,10 +42,7 @@ export function AuthProvider({ children }) {
         });
       });
     setIsLoggedIn(true);
-  }
-
-  async function logout() {
-    const response = await auth.signOut();
+    history.push("/calendar");
   }
 
   async function addWorkout(
@@ -100,20 +97,19 @@ export function AuthProvider({ children }) {
         console.log(error);
       });
   }
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     setCurrentUser(user);
-  //     setLoading(false);
-  //   });
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-  //   return unsubscribe;
-  // }, []);
+    return unsubscribe;
+  }, []);
 
   const value = {
     currentUser,
     signup,
     login,
-    logout,
     addWorkout,
     fetchWorkouts,
   };

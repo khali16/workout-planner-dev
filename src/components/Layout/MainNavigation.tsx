@@ -4,13 +4,17 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../store/auth-context";
 import styles from "./MainNavigation.module.css";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
 const MainNavigation = () => {
-  const { logout } = useAuth();
-  let user = firebase.auth().currentUser;
+  const { currentUser } = useAuth();
+  const history = useHistory();
 
   function logoutHandler() {
-    console.log("Dodać wylogowanie");
+    firebase.auth().signOut();
+    history.push("/login");
+    console.log("wylogowano");
   }
 
   return (
@@ -22,30 +26,30 @@ const MainNavigation = () => {
       </div>
       <nav className={styles.nav}>
         <ul>
-          {!user && (
+          {!currentUser && (
             <li>
               <NavLink to="/login" activeClassName={styles.active}>
                 Login
               </NavLink>
             </li>
           )}
-          {!user && (
+          {!currentUser && (
             <li>
               <NavLink to="/sign-up" activeClassName={styles.active}>
                 Sign up
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink to="/calendar" activeClassName={styles.active}>
-              Calendar
-            </NavLink>
-          </li>
-          {user && (
+          {currentUser && (
             <li>
-              <button onClick={logoutHandler}>Logout</button>
+              <NavLink to="/calendar" activeClassName={styles.active}>
+                Calendar
+              </NavLink>
             </li>
           )}
+          <li>
+            <a onClick={logoutHandler}>Logout</a>
+          </li>
         </ul>
       </nav>
     </header>
