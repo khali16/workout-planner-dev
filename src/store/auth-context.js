@@ -11,6 +11,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [currentUserEmail, setCurrentUserEmail] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
@@ -29,6 +30,7 @@ export function AuthProvider({ children }) {
       db.collection("users").doc(response.user.uid).set(user);
     }
     setIsLoggedIn(true);
+    history.push("/calendar");
   }
 
   async function login(email, password) {
@@ -100,6 +102,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      setCurrentUserEmail(user.email);
       setLoading(false);
     });
 
@@ -108,6 +111,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    currentUserEmail,
     signup,
     login,
     addWorkout,

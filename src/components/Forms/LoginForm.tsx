@@ -35,7 +35,6 @@ const LoginForm = () => {
         }}
         onSubmit={(values) => {
           submitHandler(values.email, values.password);
-          history.push("/calendar");
         }}
         validationSchema={Schema}
       >

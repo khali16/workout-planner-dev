@@ -47,7 +47,11 @@ export interface workoutPlanKubi {
   exercises: Exercise[];
 }
 
-const ExerciseForm: React.FC = ({}) => {
+interface OwnProps {
+  showForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   const history = useHistory();
   const { addWorkout } = useAuth();
 
@@ -114,6 +118,7 @@ const ExerciseForm: React.FC = ({}) => {
                 day,
                 monthName
               );
+              showForm(false);
             }}
             validationSchema={Schema}
           >
