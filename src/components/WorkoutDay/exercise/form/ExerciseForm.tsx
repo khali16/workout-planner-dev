@@ -27,26 +27,6 @@ export interface workoutPlan {
   time?: number;
 }
 
-export interface User {
-  //todo backend layer
-  login: string;
-  password: string;
-  workouts: workoutPlanKubi[];
-  firstName: string;
-  lastName: string;
-}
-
-export interface workoutPlanKubi {
-  specifiedDay: string;
-  specifiedMonth: string;
-  isCyclical: {
-    days: number[];
-  };
-  title?: string;
-  time: number;
-  exercises: Exercise[];
-}
-
 interface OwnProps {
   showForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -56,13 +36,14 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   const { addWorkout } = useAuth();
 
   const { day, monthName } = useCurrentDate();
+  const dayDB = parseFloat(day);
 
   async function submitHandler(
     title: string,
     typeOfExercise: never[],
     secondsOfExercise: string,
     url: string,
-    day: string,
+    day: number,
     monthName: string
   ) {
     try {
@@ -71,7 +52,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
         typeOfExercise,
         secondsOfExercise,
         url,
-        day,
+        dayDB,
         monthName
       );
       console.log(day, monthName);
@@ -115,7 +96,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
                 data.typeOfExercise,
                 data.secondsOfExercise,
                 data.url,
-                day,
+                dayDB,
                 monthName
               );
               showForm(false);

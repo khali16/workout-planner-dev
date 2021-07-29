@@ -29,12 +29,7 @@ const Calendar = () => {
           year={year}
           onClick1={() => setDate(new Date(year, month + 1, day))}
         />
-        <Days
-          date={date}
-          month={month}
-          startDay={startDay}
-          workouts={workouts}
-        />
+        <Days date={date} month={month} startDay={startDay} />
       </div>
     </>
   );

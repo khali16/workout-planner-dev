@@ -13,3 +13,8 @@
   opacity: 0.3;
   color: #52e896;
 }
+
+.workout li {
+  font-size: small;
+  list-style-type: square;
+}

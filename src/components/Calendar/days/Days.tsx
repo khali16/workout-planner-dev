@@ -7,22 +7,17 @@ import {
   DAYS_LEAP,
   DAYS_OF_THE_WEEK,
 } from "../../../constants/DateConsts";
+import { useDB } from "../../../hooks/useDB";
 
 interface OwnProps {
   date: Date;
   month: number;
   startDay: number;
-  workouts: never[];
 }
 
 type Props = OwnProps;
 
-const Days: FunctionComponent<Props> = ({
-  date,
-  month,
-  startDay,
-  workouts,
-}) => {
+const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
   //@ts-ignore
   return (
@@ -39,6 +34,7 @@ const Days: FunctionComponent<Props> = ({
           .fill(null)
           .map((_, index) => {
             const day = index - (startDay - 2);
+            const { workoutsDB } = useDB(day);
             return (
               <>
                 <Day
@@ -46,7 +42,7 @@ const Days: FunctionComponent<Props> = ({
                   day={day}
                   index={index}
                   month={month}
-                  workouts={workouts}
+                  workouts={workoutsDB}
                 ></Day>
               </>
             );
