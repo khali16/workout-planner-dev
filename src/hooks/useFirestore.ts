@@ -4,6 +4,7 @@ import {useAuth} from '../store/auth-context';
 import { domainToASCII } from 'url';
 
 interface Workout {
+  id: string,
     title: string;
     typeOfExercise: string;
     secondsOfExercise: string;
@@ -22,6 +23,7 @@ export const useFirestore = (day: string, monthName: string, showForm: boolean) 
         .where("user", "==", user)
         .where("day", "==", day)
         .where("monthName", "==", monthName)
+        .orderBy("created")
           .get()
           .then((querySnapshot) => {
             if (!querySnapshot.empty) {
@@ -30,6 +32,7 @@ export const useFirestore = (day: string, monthName: string, showForm: boolean) 
                 workoutsArray = [
                   ...workoutsArray,
                   {
+                    id: doc.id,
                     title: doc.data().title,
                     typeOfExercise: doc.data().typeOfExercise,
                     secondsOfExercise: doc.data().secondsOfExercise,

@@ -6,8 +6,9 @@ import {
 
 import "react-vertical-timeline-component/style.min.css";
 import ReactPlayer from "react-player";
-import { StylesContext } from "@material-ui/styles";
 import styles from "./SingleWorkout.module.css";
+import { ReactComponent as Muscle } from "../../Icons/muscle.svg";
+import Timer from "./Timer/Timer";
 
 interface Props {
   title: string;
@@ -22,20 +23,27 @@ const SingleWorkout: React.FC<Props> = ({
   secondsOfExercise,
   urlExercise,
 }) => {
+  const seconds = parseFloat(secondsOfExercise);
+
   return (
     <div className={styles.frame}>
       <VerticalTimeline layout="1-column" className={styles.secondFrame}>
         <VerticalTimelineElement
-          date={secondsOfExercise}
           dateClassName="vertical-timeline-element--work"
           className={styles.box}
+          icon={<Muscle />}
           iconClassName={styles.icon}
         >
-          <h3 className="vertical-timeline-element-title">{title}</h3>
-          <h5 className="vertical-timeline-element-subtitle">
-            {typeOfExercise}
-          </h5>
-          <ReactPlayer url={urlExercise} width="80%" />
+          <h3 className="vertical-timeline-element-title">
+            You're working on {typeOfExercise}
+          </h3>
+          <Timer durationSeconds={seconds} exercise={title} />
+          <br />
+          <ReactPlayer
+            url={urlExercise}
+            width="80%"
+            className={styles.player}
+          />
         </VerticalTimelineElement>
       </VerticalTimeline>
     </div>

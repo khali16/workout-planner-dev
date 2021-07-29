@@ -24,13 +24,16 @@ const WorkoutPlan: React.FC<Props> = (props) => {
       <div className={styles.frame}>
         {workouts.map((workout) => (
           <SingleWorkout
+            key={workout.id}
             title={workout.title}
             typeOfExercise={workout.typeOfExercise}
             secondsOfExercise={workout.secondsOfExercise}
             urlExercise={workout.urlExercise}
           />
         ))}
-        <button onClick={showFormHandler}>Add workout</button>
+        <button onClick={showFormHandler}>
+          <span>Add workout</span>
+        </button>
         {showForm && <ExerciseForm showForm={setShowForm} />}
       </div>
     </>
