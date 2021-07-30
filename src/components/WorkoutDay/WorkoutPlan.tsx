@@ -31,10 +31,11 @@ const WorkoutPlan: React.FC<Props> = (props) => {
             urlExercise={workout.urlExercise}
           />
         ))}
-        <button onClick={showFormHandler}>
+        {console.log(workouts)}
+        {/* <button onClick={showFormHandler}>
           <span>Add workout</span>
-        </button>
-        {showForm && <ExerciseForm showForm={setShowForm} />}
+        </button> */}
+        {/* {showForm && <ExerciseForm showForm={setShowForm} />} */}
       </div>
     </>
   );
