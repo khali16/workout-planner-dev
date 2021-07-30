@@ -1,11 +1,14 @@
-import React, { useState, ChangeEvent, Consumer } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory, useParams } from "react-router-dom";
 import styles from "./ExerciseForm.module.css";
-import useInput from "../../../../hooks/useInput";
-import { hasAtLeastFiveLetters } from "../../../../utils/validation";
-import { getFullMonthName } from "../../../../utils/dateUtils";
 import { Exercise } from "../../../../constants/interfaces";
 import { useCurrentDate } from "../../../../hooks/useCurrentDate";
+import * as Yup from "yup";
+import TextFields from "./TextFields";
+import { Formik, Form } from "formik";
+import { TextField } from "@material-ui/core";
+import BodyPartToExercise from "./BodyPartToExercise";
+import { useAuth } from "../../../../store/auth-context";
 
 export interface workoutPlan {
   specifiedDay?: string;
@@ -18,148 +21,58 @@ export interface workoutPlan {
     arms: string;
     back: string;
   };
+  secondsOfExercise?: number;
   details?: string;
   video?: string;
   time?: number;
 }
 
-export interface User {
-  //todo backend layer
-  login: string;
-  password: string;
-  workouts: workoutPlanKubi[];
-  firstName: string;
-  lastName: string;
-}
-
-export interface workoutPlanKubi {
-  specifiedDay: string;
-  specifiedMonth: string;
-  isCyclical: {
-    days: number[];
-  };
-  title?: string;
-  time: number;
-  exercises: Exercise[];
-}
-
 interface OwnProps {
-  addExercise: (exercise: Exercise) => {};
-  setEditMode: (bool: boolean) => {};
+  showForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
-  const [legsWorkout, setLegsWorkout] = useState("");
-  const [glutesWorkout, setGlutesWorkout] = useState("");
-  const [absWorkout, setAbsWorkout] = useState("");
-  const [armsWorkout, setArmsWorkout] = useState("");
-  const [backWorkout, setBackWorkout] = useState("");
-  const [url, setUrl] = useState("");
-
+const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   const history = useHistory();
-
-  const {
-    value: enteredTitle,
-    isValid: enteredTitleIsValid,
-    valueChangeHandler: titleChangeHandler,
-    hasError: titleHasError,
-    inputBlurHandler: titleBlurHandler,
-  } = useInput(hasAtLeastFiveLetters);
-
-  const {
-    value: enteredSpecifiedWorkout,
-    isValid: enteredSpecifiedWorkoutIsValid,
-    valueChangeHandler: specifiedWorkoutChangeHandler,
-    hasError: specifiedWorkoutHasError,
-    inputBlurHandler: specifiedWorkoutBlurHandler,
-  } = useInput(hasAtLeastFiveLetters);
+  const { addWorkout } = useAuth();
 
   const { day, monthName } = useCurrentDate();
+  const dayDB = parseFloat(day);
 
-  const submitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!enteredTitleIsValid && !enteredSpecifiedWorkoutIsValid) {
-      return;
+  async function submitHandler(
+    title: string,
+    typeOfExercise: never[],
+    secondsOfExercise: string,
+    url: string,
+    day: number,
+    monthName: string
+  ) {
+    try {
+      await addWorkout(
+        title,
+        typeOfExercise,
+        secondsOfExercise,
+        url,
+        dayDB,
+        monthName
+      );
+      console.log(day, monthName);
+    } catch {
+      alert("Something went worng...");
     }
-
-    // const workoutPlan: workoutPlan = {
-    //   specifiedDay: day,
-    //   specifiedMonth: monthName,
-    //   title: enteredTitle,
-    //   bodyWorkout: {
-    //     legs: legsWorkout,
-    //     glutes: glutesWorkout,
-    //     abs: absWorkout,
-    //     arms: armsWorkout,
-    //     back: backWorkout,
-    //   },
-    //   details: enteredSpecifiedWorkout,
-    //   video: url,
-    // };
-    // // addWorkout(workoutPlan);
-    addExercise({
-      title: enteredTitle,
-      engagedBodyParts: {
-        legs: { checked: !!legsWorkout, title: legsWorkout },
-        glutes: { checked: !!glutesWorkout, title: glutesWorkout },
-        abs: { checked: !!absWorkout, title: absWorkout },
-        arms: { checked: !!armsWorkout, title: armsWorkout },
-        back: { checked: !!backWorkout, title: backWorkout },
-        warmUp: { checked: !!glutesWorkout, title: glutesWorkout }, //todo add warmup
-      },
-      description: enteredSpecifiedWorkout,
-      video: url,
-      totalTime: 30,
-      finished: false,
-    });
-    setEditMode(false);
-    // history.push("/calendar");
-  };
-
-  async function addWorkout(workoutPlan: workoutPlanKubi) {
-    // const response = await fetch(
-    //   "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify(workoutPlan),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const data = await response.json();
-    console.log(workoutPlan);
   }
 
-  const legsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setLegsWorkout(event.target.value);
-  };
-
-  const glutesWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setGlutesWorkout(event.target.value);
-  };
-
-  const absWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setAbsWorkout(event.target.value);
-  };
-
-  const armsWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setArmsWorkout(event.target.value);
-  };
-
-  const backWorkoutHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setBackWorkout(event.target.value);
-  };
-
-  const urlWorkoutHanlder = (event: ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value);
-  };
-
-  const titleInputStyles = titleHasError ? styles.invalid : "";
-  const specifiedWorkoutInputStyles = specifiedWorkoutHasError
-    ? styles.invalid
-    : "";
+  const Schema = Yup.object().shape({
+    title: Yup.string()
+      .min(3, "Too short!")
+      .max(20, "Too long!")
+      .required("Please, enter a exercise"),
+    typeOfExercise: Yup.array().required("Select one part of body"),
+    secondsOfExercise: Yup.number()
+      .min(5, "Don't be lazy")
+      .max(180, "Whoah! Slow down")
+      .required("Please, enter likely time of the exercise"),
+    url: Yup.string().required("Please, enter some url of exercise or music!"),
+  });
 
   return (
     <>
@@ -169,89 +82,77 @@ const ExerciseForm: React.FC<OwnProps> = ({ addExercise, setEditMode }) => {
           <div className={styles.Month}>{monthName}</div>
         </div>
         <div className={styles.Form}>
-          <form onSubmit={submitHandler}>
-            <div className={`${titleInputStyles}`}>
-              <label htmlFor="title" className={styles.TextInput_label}>
-                Title
-              </label>
-              <input
-                type="input"
-                className={styles.TextInput}
-                id="title"
-                required
-                value={enteredTitle}
-                onChange={titleChangeHandler}
-                onBlur={titleBlurHandler}
-              />
-            </div>
-            <div className={styles.RadioInput}>
-              <span>Type of exercise</span>
-              <input
-                type="radio"
-                value="legs"
-                id="legs"
-                onChange={legsWorkoutHandler}
-              />
-              <label htmlFor="legs">Legs</label>
-              <input
-                type="radio"
-                value="glutes"
-                id="glutes"
-                onChange={glutesWorkoutHandler}
-              />
-              <label htmlFor="glutes">Glutes</label>
-              <input
-                type="radio"
-                value="abs"
-                id="abs"
-                onChange={absWorkoutHandler}
-              />
-              <label htmlFor="abs">Abs</label>
-              <input
-                type="radio"
-                value="arms"
-                id="arms"
-                onChange={armsWorkoutHandler}
-              />
-              <label htmlFor="arms">Arms</label>
-              <input
-                type="radio"
-                value="back"
-                id="back"
-                onChange={backWorkoutHandler}
-              />
-              <label htmlFor="back">Back</label>
-            </div>
-            <div
-              className={`${styles.SpecifiedWorkout} ${specifiedWorkoutInputStyles}`}
-            >
-              <label htmlFor="specifiedWorkout" className={styles.Label}>
-                Specified Workout
-              </label>
-              <input
-                type="text"
-                id="specifiedWorkout"
-                className={styles.TextInput}
-                value={enteredSpecifiedWorkout}
-                onChange={specifiedWorkoutChangeHandler}
-                onBlur={specifiedWorkoutBlurHandler}
-              />
-            </div>
-            <div className={styles.VideoInput}>
-              <label htmlFor="video" className={styles.Label}>
-                Helpful video
-              </label>
-              <input
-                type="url"
-                id="video"
-                className={styles.TextInput}
-                onChange={urlWorkoutHanlder}
-              />
-            </div>
-            <button>
-              <span>Submit</span>
-            </button>
-          </form>
+          <Formik
+            validateOnChange={true}
+            initialValues={{
+              title: "",
+              typeOfExercise: [],
+              secondsOfExercise: "",
+              url: "",
+            }}
+            onSubmit={(data) => {
+              submitHandler(
+                data.title,
+                data.typeOfExercise,
+                data.secondsOfExercise,
+                data.url,
+                dayDB,
+                monthName
+              );
+              showForm(false);
+            }}
+            validationSchema={Schema}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              errors,
+              touched,
+              values,
+            }) => (
+              <Form>
+                <label>Body part to exercise:</label>
+                <br />
+                <BodyPartToExercise />
+                {errors.typeOfExercise && touched.typeOfExercise ? (
+                  <p className={styles.Error}>{errors.typeOfExercise}</p>
+                ) : null}
+                <div className={styles.InputField}>
+                  <TextFields
+                    placeholder="Exercise"
+                    name="title"
+                    type="text"
+                    as={TextField}
+                  />
+                  {errors.title && touched.title ? <p>{errors.title}</p> : null}
+                </div>
+                <div className={styles.InputField}>
+                  <TextFields
+                    name="secondsOfExercise"
+                    type="number"
+                    placeholder="Seconds of exercise:"
+                    as={TextField}
+                  />
+                  {errors.secondsOfExercise && touched.secondsOfExercise ? (
+                    <p>{errors.secondsOfExercise}</p>
+                  ) : null}
+                </div>
+                <div className={styles.InputField}>
+                  <TextFields
+                    name="url"
+                    type="url"
+                    placeholder="Helpful video"
+                    as={TextField}
+                  />
+                  {errors.url && touched.url ? <p>{errors.url}</p> : null}
+                </div>
+                <button type="submit">
+                  <span>Submit</span>
+                </button>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </>

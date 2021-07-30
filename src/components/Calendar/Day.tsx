@@ -1,28 +1,50 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Day.module.css";
 import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
+import { useDB } from "../../hooks/useDB";
+
 interface OwnProps {
   index: number;
-  d: number;
+  day: number;
   month: number;
+  workouts: Workouts[];
 }
 
-const Day: React.FC<OwnProps> = ({ index, d, month }: OwnProps) => {
+interface Workouts {
+  day: number;
+  typeOfExercise: string[];
+  month: string;
+}
+
+const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
   let history = useHistory();
   const match = useRouteMatch();
   const rightMonthFigure = month + 1;
 
   const pushToSelectedDayHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    history.push(`${match.url}/${rightMonthFigure}/${d}`);
+    history.push(`${match.url}/${rightMonthFigure}/${day}`);
   };
 
-  const dayBox = d > 0 ? styles.Day : styles.nonDay;
+  const today = new Date();
+  const currentDay = today.getDate();
+
+  const currentDayBox = day === currentDay ? styles.CurrentDay : "";
+  const dayBox = day > 0 ? styles.Day : styles.nonDay;
 
   return (
     <>
-      <div className={dayBox} key={index} onClick={pushToSelectedDayHandler}>
-        {d > 0 ? d : ""}
+      <div
+        className={`${dayBox} ${currentDayBox}`}
+        key={index}
+        onClick={pushToSelectedDayHandler}
+      >
+        {day > 0 ? day : ""}
+        <div className={styles.workout}>
+          {workouts.map((workout) =>
+            workout.day === day ? <li>{workout.typeOfExercise}</li> : null
+          )}
+        </div>
       </div>
     </>
   );

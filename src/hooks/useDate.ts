@@ -6,6 +6,7 @@ export const useDate = (date: Date) => {
     const [month, setMonth] = useState(date.getMonth());
     const [year, setYear] = useState(date.getFullYear());
     const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
+    
 
     useEffect(() => {
         setDay(date.getDate());
