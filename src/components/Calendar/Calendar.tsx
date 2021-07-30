@@ -1,38 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./Calendar.module.css";
-import { useRouteMatch, withRouter } from "react-router-dom";
-import CurrentTimeInfo from "./currentTimeInfo/CurrentTimeInfo";
-import { useDate } from "../../hooks/useDate";
-import { DAYS_OF_THE_WEEK } from "../../constants/DateConsts";
+import { withRouter } from "react-router-dom";
+import {useDate} from "../../hooks/useDate";
 import Days from "./days/Days";
 import CalendarHeadline from "./headline/CalendarHeadline";
-import { useAuth } from "../../store/auth-context";
 
 const Calendar = () => {
-  const today = new Date();
-  const [date, setDate] = useState(today);
-  const [cwiczenia, setCwiczenia] = useState([]);
-  const { day, startDay, month, year } = useDate(date);
-  const { fetchWorkouts, workouts } = useAuth();
 
-  useEffect(() => {
-    fetchWorkouts(setCwiczenia);
-    console.log(workouts);
-  }, []);
+    const today = new Date();
+    const [date, setDate] = useState(today);
+    const [error, setError] = useState("");
+    const [workouts, setWorkouts] = useState(Array());
+    const {day, startDay, month, year} = useDate(date);
 
-  return (
-    <>
-      <div className={styles.Frame}>
-        <CalendarHeadline
-          onClick={() => setDate(new Date(year, month - 1, day))}
-          month={month}
-          year={year}
-          onClick1={() => setDate(new Date(year, month + 1, day))}
-        />
-        <Days date={date} month={month} startDay={startDay} />
-      </div>
-    </>
-  );
+    async function fetchWorkout() {
+        try {
+            const response = await fetch(
+                "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json"
+            );
+            if (!response.ok) {
+                throw new Error("Something went wrong...");
+            }
+
+            const data = await response.json();
+
+            const workouciki = [];
+
+            for (const key in data) {
+                setWorkouts;
+                workouciki.push({
+                    id: key,
+                    title: data[key].title,
+                    specifiedDay: data[key].specifiedDay,
+                    specifiedMonth: data[key].specifiedMonth,
+                });
+            }
+            setWorkouts(workouciki);
+        } catch (error) {
+            setError(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchWorkout();
+    }, [])
+
+
+    return (
+        <>
+            <div className={styles.Frame}>
+                    <CalendarHeadline onClick={() => setDate(new Date(year, month - 1, day))} month={month}
+                                      year={year}
+                                      onClick1={() => setDate(new Date(year, month + 1, day))}/>
+                    <Days date={date} month={month} startDay={startDay}/>
+            </div>
+        </>
+    );
 };
 
 export default withRouter(Calendar);

@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Day.module.css";
-import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
-import { useDB } from "../../hooks/useDB";
+import { useRouteMatch, useHistory} from "react-router-dom";
 
 interface OwnProps {
   index: number;
   day: number;
   month: number;
-  workouts: Workouts[];
 }
 
-interface Workouts {
-  day: number;
-  typeOfExercise: string[];
-  month: string;
-}
-
-const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
+const Day: React.FC<OwnProps> = ({ index, day, month }: OwnProps) => {
   let history = useHistory();
   const match = useRouteMatch();
   const rightMonthFigure = month + 1;
@@ -40,11 +32,6 @@ const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
         onClick={pushToSelectedDayHandler}
       >
         {day > 0 ? day : ""}
-        <div className={styles.workout}>
-          {workouts.map((workout) =>
-            workout.day === day ? <li>{workout.typeOfExercise}</li> : null
-          )}
-        </div>
       </div>
     </>
   );

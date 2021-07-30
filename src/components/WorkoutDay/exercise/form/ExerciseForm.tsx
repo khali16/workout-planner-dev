@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styles from "./ExerciseForm.module.css";
 import { Exercise } from "../../../../constants/interfaces";
 import { useCurrentDate } from "../../../../hooks/useCurrentDate";
@@ -8,57 +8,52 @@ import TextFields from "./TextFields";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import BodyPartToExercise from "./BodyPartToExercise";
-import { useAuth } from "../../../../store/auth-context";
+
+
+export interface User {
+  //todo backend layer
+  login: string;
+  password: string;
+  workouts: workoutPlan[];
+  firstName: string;
+  lastName: string;
+}
 
 export interface workoutPlan {
-  specifiedDay?: string;
-  specifiedMonth?: string;
-  title?: string;
-  bodyWorkout?: {
-    legs: string;
-    glutes: string;
-    abs: string;
-    arms: string;
-    back: string;
-  };
-  secondsOfExercise?: number;
-  details?: string;
-  video?: string;
-  time?: number;
+  title: string,
+  typeOfExercise: never[],
+  secondsOfExercise: string,
+  url: string,
+  day: string,
+  monthName: string
 }
 
 interface OwnProps {
-  showForm: React.Dispatch<React.SetStateAction<boolean>>;
+  addExercise: (exercise: Exercise) => {};
+  setEditMode: (bool: boolean) => {};
 }
 
-const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
+const ExerciseForm: React.FC<OwnProps> = ({
+  addExercise,
+  setEditMode
+}) => {
+
   const history = useHistory();
-  const { addWorkout } = useAuth();
-
   const { day, monthName } = useCurrentDate();
-  const dayDB = parseFloat(day);
 
-  async function submitHandler(
-    title: string,
-    typeOfExercise: never[],
-    secondsOfExercise: string,
-    url: string,
-    day: number,
-    monthName: string
-  ) {
-    try {
-      await addWorkout(
-        title,
-        typeOfExercise,
-        secondsOfExercise,
-        url,
-        dayDB,
-        monthName
-      );
-      console.log(day, monthName);
-    } catch {
-      alert("Something went worng...");
-    }
+  async function addWorkout(workoutPlan: workoutPlan) {
+    const response = await fetch(
+      "https://workout-planner-e4e5e-default-rtdb.firebaseio.com/workouts.json",
+      {
+        method: "POST",
+        body: JSON.stringify(workoutPlan),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(workoutPlan);
   }
 
   const Schema = Yup.object().shape({
@@ -89,27 +84,18 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
               typeOfExercise: [],
               secondsOfExercise: "",
               url: "",
+              day: day,
+              monthName: monthName
             }}
             onSubmit={(data) => {
-              submitHandler(
-                data.title,
-                data.typeOfExercise,
-                data.secondsOfExercise,
-                data.url,
-                dayDB,
-                monthName
-              );
-              showForm(false);
+              addWorkout(data);
+              history.push("/calendar")
             }}
             validationSchema={Schema}
           >
             {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
               errors,
               touched,
-              values,
             }) => (
               <Form>
                 <label>Body part to exercise:</label>

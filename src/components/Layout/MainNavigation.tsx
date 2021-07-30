@@ -1,21 +1,17 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 //@ts-ignore
-import { useAuth } from "../../store/auth-context";
 import styles from "./MainNavigation.module.css";
-import firebase from "firebase";
-import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import AuthContext from "../../store/auth-context";
 
 const MainNavigation = () => {
-  const { currentUser } = useAuth();
-  const history = useHistory();
+  const authContext = useContext(AuthContext);
 
-  function logoutHandler() {
-    firebase.auth().signOut();
-    history.push("/login");
-    console.log("wylogowano");
-  }
+  const isLoggedIn = authContext.isLoggedIn;
+
+  const logoutHandler = () => {
+    authContext.logout();
+  };
 
   return (
     <header className={styles.header}>
@@ -26,30 +22,30 @@ const MainNavigation = () => {
       </div>
       <nav className={styles.nav}>
         <ul>
-          {!currentUser && (
+          {!isLoggedIn && (
             <li>
               <NavLink to="/login" activeClassName={styles.active}>
                 Login
               </NavLink>
             </li>
           )}
-          {!currentUser && (
+          {!isLoggedIn && (
             <li>
               <NavLink to="/sign-up" activeClassName={styles.active}>
                 Sign up
               </NavLink>
             </li>
           )}
-          {currentUser && (
+          <li>
+            <NavLink to="/calendar" activeClassName={styles.active}>
+              Calendar
+            </NavLink>
+          </li>
+          {isLoggedIn && (
             <li>
-              <NavLink to="/calendar" activeClassName={styles.active}>
-                Calendar
-              </NavLink>
+              <button onClick={logoutHandler}><span>Logout</span></button>
             </li>
           )}
-          <li>
-            <a onClick={logoutHandler}>Logout</a>
-          </li>
         </ul>
       </nav>
     </header>
