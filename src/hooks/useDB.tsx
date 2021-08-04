@@ -10,8 +10,6 @@ interface Workout {
 
 export const useDB = (day: number) => {
   const [workoutsDB, setWorkouts] = useState<Workout[]>([]);
-  let user = firebase.auth().currentUser?.email;
-
   useEffect(() => {
     const db = firebase.firestore();
 

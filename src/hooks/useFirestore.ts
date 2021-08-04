@@ -3,48 +3,37 @@ import firebase from 'firebase';
 import { domainToASCII } from 'url';
 
 interface Workout {
-  id: string,
     title: string;
     typeOfExercise: string;
     secondsOfExercise: string;
-    urlExercise: string
+   urlExercise: string
   }
 
-export const useFirestore = (day: string, monthName: string, showForm: boolean) => {
+export const useFirestore = (day: string, monthName: string) => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
-    let user = firebase.auth().currentUser?.email;
 
-    useEffect(() => {
-        const db = firebase.firestore();
+    const fetch = async() => {
+      const reponse = firebase.firestore().collection("workouts").where("day", "==", Number(day)).where("monthName", "==", monthName)
+      const odp = await reponse.get().then( snapshot => {
+        let workoutsArray: Workout[] = [];
+        snapshot.forEach( doc => {
+          const data = { 
+            title: doc.data().title,
+                  typeOfExercise: doc.data().typeOfExercise,
+                  secondsOfExercise: doc.data().secondsOfExercise,
+                  urlExercise: doc.data().urlExercise}
+
+          // setWorkouts([...workouts, {title: doc.data().title,
+          //   typeOfExercise: doc.data().typeOfExercise,
+          //   secondsOfExercise: doc.data().secondsOfExercise,
+          //   urlExercise: doc.data().urlExercise}])
+          workoutsArray = [...workoutsArray, {...data}]
+          setWorkouts([...workoutsArray])
+        })
+      })
+    }
+   
+
     
-        db.collection("workouts")
-        .where("user", "==", user)
-        .where("day", "==", day)
-        .where("monthName", "==", monthName)
-        .orderBy("created")
-          .get()
-          .then((querySnapshot) => {
-            if (!querySnapshot.empty) {
-              let workoutsArray: Workout[] = [];
-              querySnapshot.forEach((doc) => {
-                workoutsArray = [
-                  ...workoutsArray,
-                  {
-                    id: doc.id,
-                    title: doc.data().title,
-                    typeOfExercise: doc.data().typeOfExercise,
-                    secondsOfExercise: doc.data().secondsOfExercise,
-                    urlExercise: doc.data().urlExercise
-                  },
-                ];
-              });
-              setWorkouts(workoutsArray);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }, [showForm]);
-    
-      return {workouts}
+      return {workouts, fetch}
 }

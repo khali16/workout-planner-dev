@@ -8,6 +8,7 @@ import {
   DAYS_OF_THE_WEEK,
 } from "../../../constants/DateConsts";
 import { useDB } from "../../../hooks/useDB";
+import { useAuth } from "../../../store/auth-context";
 
 interface OwnProps {
   date: Date;
@@ -19,7 +20,6 @@ type Props = OwnProps;
 
 const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
   const days = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
-  //@ts-ignore
   return (
     <>
       <div className={styles.DaysName}>

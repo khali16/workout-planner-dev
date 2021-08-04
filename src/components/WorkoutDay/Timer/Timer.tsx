@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import styles from "./Timer.module.css";
 
 interface Props {
@@ -15,14 +15,6 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
   };
   const stopTimerHandler = () => {
     setIsPlaying(false);
-  };
-  const renderTimeHanlder = (seconds: number | undefined, exercise: string) => {
-    return (
-      <div className={styles.timer}>
-        <div className={styles.text}>{exercise}</div>
-        <div className={styles.value}>{seconds}</div>
-      </div>
-    );
   };
 
   return (
@@ -42,7 +34,7 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
               ["#b93d0e", 0.33],
             ]}
           >
-            {({ remainingTime }) => renderTimeHanlder(remainingTime, exercise)}
+            {handleTimePass(exercise)}
           </CountdownCircleTimer>
         </div>
         <button onClick={stopTimerHandler}>
@@ -52,5 +44,17 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
     </>
   );
 };
+
+const handleTimePass =
+  (exercise: string) =>
+  ({ remainingTime }: TimeProps) =>
+    renderTimeHandler(remainingTime, exercise);
+
+const renderTimeHandler = (seconds: number | undefined, exercise: string) => (
+  <div className={styles.timer}>
+    <div className={styles.text}>{exercise}</div>
+    <div className={styles.value}>{seconds}</div>
+  </div>
+);
 
 export default Timer;

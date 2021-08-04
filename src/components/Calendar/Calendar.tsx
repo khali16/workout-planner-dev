@@ -13,12 +13,6 @@ const Calendar = () => {
   const [date, setDate] = useState(today);
   const [cwiczenia, setCwiczenia] = useState([]);
   const { day, startDay, month, year } = useDate(date);
-  const { fetchWorkouts, workouts } = useAuth();
-
-  useEffect(() => {
-    fetchWorkouts(setCwiczenia);
-    console.log(workouts);
-  }, []);
 
   return (
     <>

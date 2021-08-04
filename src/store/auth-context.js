@@ -69,36 +69,6 @@ export function AuthProvider({ children }) {
     });
   }
 
-  async function fetchWorkouts(setCwiczenia) {
-    db.collection("workouts")
-      .get()
-      .then((querySnapshot) => {
-        if (!querySnapshot.empty) {
-          //@ts-ignore
-          let workoutsArray = [];
-          querySnapshot.forEach((doc) => {
-            workoutsArray = [
-              //@ts-ignore
-              ...workoutsArray,
-              {
-                title: doc.data().title,
-                typeOfExercise: doc.data().typeOfExercise,
-                secondsOfExercise: doc.data().secondsOfExercise,
-                day: doc.data().day,
-                monthName: doc.data().monthName,
-              },
-            ];
-          });
-          //@ts-ignore
-          setWorkouts(workoutsArray);
-          setCwiczenia(workoutsArray);
-          //@ts-ignore
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -115,7 +85,6 @@ export function AuthProvider({ children }) {
     signup,
     login,
     addWorkout,
-    fetchWorkouts,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,31 +1,51 @@
-import { workoutPlan } from "./exercise/form/ExerciseForm";
 import React, { useState } from "react";
-import { useCurrentDate } from "../../hooks/useCurrentDate";
+import { useEffect } from "react";
 import ExerciseForm from "../WorkoutDay/exercise/form/ExerciseForm";
+import firebase from "firebase";
+import { useCurrentDate } from "../../hooks/useCurrentDate";
+import { useFirestore } from "../../hooks/useFirestore";
+import SingleWorkout from "./SingleWorkout";
+import styles from "./WorkoutPlan.module.css";
 
 interface OwnProps {}
 
 type Props = OwnProps;
-
-const initializeEmptyWorkoutPlan = (): workoutPlan => ({
-  title: "",
-  typeOfExercise: [],
-  secondsOfExercise: "",
-  url: "",
-  day: "",
-  monthName: ""
-});
-
 const WorkoutPlan: React.FC<Props> = (props) => {
-  const [modalIsShown, setModalIsShown] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [closeModal, setCloseModal] = useState();
-
+  const [showForm, setShowForm] = useState(false);
   const { day, monthName } = useCurrentDate();
+  const miesiac = "August";
+
+  const { workouts, fetch } = useFirestore(day, miesiac);
+
+  const showFormHandler = () => {
+    setShowForm(!showForm);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [showForm]);
 
   return (
-    //@ts-ignore
-    <ExerciseForm />
+    <>
+      <button onClick={showFormHandler}>
+        <span>Refresh</span>
+      </button>
+      <div className={styles.frame}>
+        {workouts.map((workout, key) => (
+          <SingleWorkout
+            key={key}
+            title={workout.title}
+            typeOfExercise={workout.typeOfExercise}
+            secondsOfExercise={workout.secondsOfExercise}
+            urlExercise={workout.urlExercise}
+          />
+        ))}
+        <button onClick={showFormHandler}>
+          <span>Add workout</span>
+        </button>
+        {showForm && <ExerciseForm showForm={setShowForm} />}
+      </div>
+    </>
   );
 };
 
