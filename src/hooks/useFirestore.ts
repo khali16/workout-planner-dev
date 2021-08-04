@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import firebase from 'firebase';
-import {useAuth} from '../store/auth-context';
 import { domainToASCII } from 'url';
 
 interface Workout {
@@ -13,7 +12,6 @@ interface Workout {
 
 export const useFirestore = (day: string, monthName: string, showForm: boolean) => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
-    const { currentUserEmail } = useAuth();
     let user = firebase.auth().currentUser?.email;
 
     useEffect(() => {

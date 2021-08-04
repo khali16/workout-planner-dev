@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./SignUpForm.module.css";
-import AuthContext from "../../store/auth-context";
+import { useAuth } from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
@@ -9,8 +9,7 @@ import TextFields from "../WorkoutDay/exercise/form/TextFields";
 
 const SignUpForm = () => {
   const history = useHistory();
-  const authContext = useContext(AuthContext);
-
+  const { signup } = useAuth();
   async function submitHandler(
     firstName: string,
     lastName: string,
@@ -19,43 +18,11 @@ const SignUpForm = () => {
   ) {
     console.log(firstName, lastName, email, password);
 
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApa1WrZ97H3bjYtU-rlQzjOoFs_9HT7PI",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-          displayName: firstName,
-          lastName: lastName,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        history.replace("/calendar")
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then(() => {
-            let errorMessage = "Authentication failed!";
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        const expirationTime = new Date(
-          new Date().getTime() + +data.expiresIn * 1000
-        );
-        // @ts-ignore
-        authContext.login(data.idToken, expirationTime.toISOString());
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    try {
+      await signup(email, password, firstName, lastName);
+    } catch {
+      alert("Failed to create an account");
+    }
   }
 
   const Schema = Yup.object().shape({
@@ -102,6 +69,7 @@ const SignUpForm = () => {
             values.email,
             values.password
           );
+          history.push("/calendar");
         }}
         validationSchema={Schema}
       >
