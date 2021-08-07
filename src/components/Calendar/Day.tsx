@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Day.module.css";
 import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
-import { useDB } from "../../hooks/useDB";
 
 interface OwnProps {
   index: number;
