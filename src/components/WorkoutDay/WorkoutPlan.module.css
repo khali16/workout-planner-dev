@@ -3,9 +3,10 @@
   background-color: #263f40;
   height: auto;
 }
+.NewExercise {
+  margin-left: 43%;
+}
 .frame button {
-  margin-top: 50px;
-
   border: 3px solid #263f40;
   background-color: #11998e;
   border: none;
@@ -27,7 +28,6 @@
 }
 
 .frame button span:after {
-  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;

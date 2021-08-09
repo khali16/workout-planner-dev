@@ -1,12 +1,22 @@
 import React from "react";
 import styles from "./EmptyWorkoutPlan.module.css";
 
-const EmptyWorkoutPlan = () => {
+interface Props {
+  showForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const EmptyWorkoutPlan: React.FC<Props> = ({ showForm }) => {
+  const showFormHandler = () => {
+    showForm(true);
+  };
+
   return (
     <div className={styles.frame}>
-      <p>It's seem that there is no workout plan for today.</p>
-      <p>Let's change it and add some!</p>
-      <button>
+      <div className={styles.inspiration}>
+        <h2>It's seems your workout plan is empty</h2>
+        <h3>Let's rock and add some exercises!</h3>
+      </div>
+      <button onClick={showFormHandler}>
         <span>Add workout</span>
       </button>
     </div>

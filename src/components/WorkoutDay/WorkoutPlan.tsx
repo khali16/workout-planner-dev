@@ -28,22 +28,31 @@ const WorkoutPlan: React.FC<Props> = (props) => {
 
   return (
     <>
-      {workouts.length === 0 && <EmptyWorkoutPlan />}
-      <div className={styles.frame}>
-        {workouts.map((workout, key) => (
-          <SingleWorkout
-            key={key}
-            title={workout.title}
-            typeOfExercise={workout.typeOfExercise}
-            secondsOfExercise={workout.secondsOfExercise}
-            urlExercise={workout.urlExercise}
-          />
-        ))}
-        <button onClick={showFormHandler}>
-          <span>Add workout</span>
-        </button>
-        {showForm && <ExerciseForm showForm={setShowForm} />}
-      </div>
+      {workouts.length === 0 ? (
+        <>
+          {" "}
+          <EmptyWorkoutPlan showForm={setShowForm} />{" "}
+          {showForm && <ExerciseForm showForm={setShowForm} />}
+        </>
+      ) : (
+        <div className={styles.frame}>
+          {workouts.map((workout, key) => (
+            <SingleWorkout
+              key={key}
+              title={workout.title}
+              typeOfExercise={workout.typeOfExercise}
+              secondsOfExercise={workout.secondsOfExercise}
+              urlExercise={workout.urlExercise}
+            />
+          ))}
+          <div className={styles.NewExercise}>
+            <button onClick={showFormHandler}>
+              <span>Add workout</span>
+            </button>
+          </div>
+          {showForm && <ExerciseForm showForm={setShowForm} />}
+        </div>
+      )}
     </>
   );
 };

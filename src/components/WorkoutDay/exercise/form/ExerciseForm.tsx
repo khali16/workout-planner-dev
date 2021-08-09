@@ -35,6 +35,10 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   const history = useHistory();
   const { addWorkout } = useAuth();
 
+  const showFormHandler = () => {
+    showForm(false);
+  };
+
   const { day, monthName } = useCurrentDate();
   const dayDB = parseFloat(day);
 
@@ -77,6 +81,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   return (
     <>
       <div className={styles.Frame}>
+        <a onClick={showFormHandler}>X</a>
         <div className={styles.Header}>
           <div className={styles.Day}>{day}th</div>
           <div className={styles.Month}>{monthName}</div>

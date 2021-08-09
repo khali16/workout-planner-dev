@@ -23,7 +23,7 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
         <button onClick={startTimerHandler}>
           <span>Start</span>
         </button>
-        <div className={styles.timer}>
+        <div className={styles.timerWraper}>
           <CountdownCircleTimer
             isPlaying={isPlaying}
             size={200}
