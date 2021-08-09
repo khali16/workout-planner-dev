@@ -1,18 +1,41 @@
 .Frame {
-  width: 1000px;
+  width: 700px;
+  display: flex;
   height: 450px;
-  border: 2px solid #222222;
   background-color: #263f40;
   margin-top: 50px;
   border-radius: 10px;
   position: relative;
   padding: 15px 0 0;
-  margin: auto;
+  margin-left: 50px;
   margin-top: 40px;
 }
 
 .Form {
-  margin-top: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
+  width: 500px;
+  justify-content: flex-start;
+}
+
+.Bike {
+  justify-content: flex-end;
+  margin-left: 200px;
+}
+
+.Link {
+  margin-top: 110px;
+}
+
+.Frame a {
+  text-decoration: none;
+  color: #11998e;
+}
+
+.Frame a:hover,
+.Frame a:active,
+.Frame a.active {
+  color: whitesmoke;
 }
 
 .Form button {
@@ -26,9 +49,9 @@
   width: 150px;
   transition: all 0.5s;
   cursor: pointer;
-  float: right;
+  float: left;
   margin-right: 40px;
-  margin-top: 200px;
+  margin-top: 70px;
 }
 
 .Form button span {

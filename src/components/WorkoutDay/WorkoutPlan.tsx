@@ -6,6 +6,7 @@ import { useCurrentDate } from "../../hooks/useCurrentDate";
 import { useFirestore } from "../../hooks/useFirestore";
 import SingleWorkout from "./SingleWorkout";
 import styles from "./WorkoutPlan.module.css";
+import EmptyWorkoutPlan from "./EmptyWorkoutPlan";
 
 interface OwnProps {}
 
@@ -27,9 +28,7 @@ const WorkoutPlan: React.FC<Props> = (props) => {
 
   return (
     <>
-      <button onClick={showFormHandler}>
-        <span>Refresh</span>
-      </button>
+      {workouts.length === 0 && <EmptyWorkoutPlan />}
       <div className={styles.frame}>
         {workouts.map((workout, key) => (
           <SingleWorkout
