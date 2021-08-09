@@ -18,14 +18,13 @@ export function AuthProvider({ children }) {
   const history = useHistory();
   const db = firebase.firestore();
 
-  async function signup(email, password, firstName, lastName) {
+  async function signup(email, password, firstName) {
     const response = await auth.createUserWithEmailAndPassword(email, password);
     if (response.user.uid) {
       const user = {
         uid: response.user.uid,
         email: email,
         firstName: firstName,
-        lastName: lastName,
       };
       db.collection("users").doc(response.user.uid).set(user);
     }

@@ -75,10 +75,6 @@ const LoginForm = () => {
             </Form>
           )}
         </Formik>
-
-        <div className={styles.Bike}>
-          <Bike />
-        </div>
       </div>
     </>
   );

@@ -1,9 +1,9 @@
 .header {
-  height: 20vh;
+  height: 10vh;
   display: flex;
   padding: 0 10%;
   justify-content: space-between;
-  background-color: #263f40;
+  background-color: #11998e;
 }
 
 .logo {
@@ -34,14 +34,14 @@
 
 .nav a {
   text-decoration: none;
-  color: #bfd8d9;
+  color: whitesmoke;
   cursor: pointer;
 }
 
 .nav a:hover,
 .nav a:active,
 .nav a.active {
-  color: #009999;
+  color: whitesmoke;
   font-weight: bolder;
 }
 

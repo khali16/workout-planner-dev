@@ -6,20 +6,20 @@ import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
+import { ReactComponent as WorkoutImage } from "../../Icons/workout.svg";
 
 const SignUpForm = () => {
   const history = useHistory();
   const { signup } = useAuth();
   async function submitHandler(
     firstName: string,
-    lastName: string,
     email: string,
     password: string
   ) {
-    console.log(firstName, lastName, email, password);
+    console.log(firstName, email, password);
 
     try {
-      await signup(email, password, firstName, lastName);
+      await signup(email, password, firstName);
     } catch {
       alert("Failed to create an account");
     }
@@ -28,9 +28,6 @@ const SignUpForm = () => {
   const Schema = Yup.object().shape({
     firstName: Yup.string()
       .required("Please, enter your first name")
-      .min(3, "Your name should have at least 3 letters"),
-    lastName: Yup.string()
-      .required("Please, enter your last name")
       .min(3, "Your name should have at least 3 letters"),
     email: Yup.string().email().required("Please, enter valid email"),
     password: Yup.string()
@@ -57,18 +54,12 @@ const SignUpForm = () => {
         validateOnChange={true}
         initialValues={{
           firstName: "",
-          lastName: "",
           email: "",
           password: "",
           confirmPassword: "",
         }}
         onSubmit={(values) => {
-          submitHandler(
-            values.firstName,
-            values.lastName,
-            values.email,
-            values.password
-          );
+          submitHandler(values.firstName, values.email, values.password);
           history.push("/calendar");
         }}
         validationSchema={Schema}
@@ -85,17 +76,6 @@ const SignUpForm = () => {
                 />
                 {errors.firstName && touched.firstName ? (
                   <p>{errors.firstName}</p>
-                ) : null}
-              </div>
-              <div className={styles.InputField}>
-                <TextFields
-                  placeholder="Last Name"
-                  name="lastName"
-                  type="text"
-                  as={TextField}
-                />
-                {errors.lastName && touched.lastName ? (
-                  <p>{errors.lastName}</p>
                 ) : null}
               </div>
               <div className={styles.InputField}>
@@ -136,6 +116,9 @@ const SignUpForm = () => {
           </Form>
         )}
       </Formik>
+      <div className={styles.MotivationBox}>
+        <h1>Let's begin your Healthiest Journey together!</h1>
+      </div>
     </div>
   );
 };

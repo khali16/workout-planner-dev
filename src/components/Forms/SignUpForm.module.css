@@ -1,18 +1,33 @@
 .Frame {
-  width: 1000px;
-  height: 900px;
-  border: 2px solid #222222;
+  background: url("../../Icons/Thuisfitness.jpg") no-repeat;
+  background-size: 100% auto;
+  height: 88vh;
+  display: flex;
   background-color: #263f40;
   margin-top: 50px;
-  border-radius: 10px;
   position: relative;
   padding: 15px 0 0;
   margin: auto;
-  margin-top: 40px;
 }
 
 .Form {
-  margin-top: 50px;
+  width: 500px;
+  margin-left: 100px;
+  justify-content: flex-start;
+}
+
+.MotivationBox {
+  justify-content: flex-end;
+  width: 850px;
+}
+
+.MotivationBox h1 {
+  color: whitesmoke;
+  font-family: "Trocchi", serif;
+  font-size: 45px;
+  font-weight: normal;
+  line-height: 48px;
+  margin: 0;
 }
 
 .Form button {
@@ -27,8 +42,8 @@
   transition: all 0.5s;
   cursor: pointer;
   float: right;
+  margin-top: 15px;
   margin-right: 40px;
-  margin-top: 200px;
 }
 
 .Form button span {
