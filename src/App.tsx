@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar/Calendar";
-import ExerciseForm from "./components/WorkoutDay/exercise/form/ExerciseForm";
 import LoginForm from "./components/Forms/LoginForm";
-import SignUpForm from "./components/Forms/SignUpForm";
 import Layout from "./components/Layout/Layout";
 import WorkoutPlan from "./components/WorkoutDay/WorkoutPlan";
 import { AuthProvider } from "./store/auth-context";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -17,10 +17,10 @@ function App() {
             <LoginForm />
           </Route>
           <Route path="/login">
-            <LoginForm />
+            <Login />
           </Route>
           <Route path="/sign-up">
-            <SignUpForm />
+            <SignUp />
           </Route>
           <Route path="/calendar/:month/:day">
             <WorkoutPlan />

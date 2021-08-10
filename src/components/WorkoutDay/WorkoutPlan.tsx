@@ -6,6 +6,7 @@ import { useCurrentDate } from "../../hooks/useCurrentDate";
 import { useFirestore } from "../../hooks/useFirestore";
 import SingleWorkout from "./SingleWorkout";
 import styles from "./WorkoutPlan.module.css";
+import EmptyWorkoutPlan from "./EmptyWorkoutPlan";
 
 interface OwnProps {}
 
@@ -27,24 +28,31 @@ const WorkoutPlan: React.FC<Props> = (props) => {
 
   return (
     <>
-      <button onClick={showFormHandler}>
-        <span>Refresh</span>
-      </button>
-      <div className={styles.frame}>
-        {workouts.map((workout, key) => (
-          <SingleWorkout
-            key={key}
-            title={workout.title}
-            typeOfExercise={workout.typeOfExercise}
-            secondsOfExercise={workout.secondsOfExercise}
-            urlExercise={workout.urlExercise}
-          />
-        ))}
-        <button onClick={showFormHandler}>
-          <span>Add workout</span>
-        </button>
-        {showForm && <ExerciseForm showForm={setShowForm} />}
-      </div>
+      {workouts.length === 0 ? (
+        <>
+          {" "}
+          <EmptyWorkoutPlan showForm={setShowForm} />{" "}
+          {showForm && <ExerciseForm showForm={setShowForm} />}
+        </>
+      ) : (
+        <div className={styles.frame}>
+          {workouts.map((workout, key) => (
+            <SingleWorkout
+              key={key}
+              title={workout.title}
+              typeOfExercise={workout.typeOfExercise}
+              secondsOfExercise={workout.secondsOfExercise}
+              urlExercise={workout.urlExercise}
+            />
+          ))}
+          <div className={styles.NewExercise}>
+            <button onClick={showFormHandler}>
+              <span>Add workout</span>
+            </button>
+          </div>
+          {showForm && <ExerciseForm showForm={setShowForm} />}
+        </div>
+      )}
     </>
   );
 };

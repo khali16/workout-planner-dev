@@ -1,18 +1,35 @@
 .Frame {
-  width: 1000px;
-  height: 450px;
-  border: 2px solid #222222;
-  background-color: #263f40;
+  display: flex;
+  height: 88vh;
+  background: url("../../Icons/trainers-on-the-best-workout-for-people-with-back-pain.png")
+    no-repeat;
+  background-size: 100% auto;
   margin-top: 50px;
-  border-radius: 10px;
   position: relative;
   padding: 15px 0 0;
-  margin: auto;
   margin-top: 40px;
 }
 
 .Form {
-  margin-top: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
+  width: 500px;
+  justify-content: flex-start;
+}
+
+.Link {
+  margin-top: 60px;
+}
+
+.Frame a {
+  text-decoration: none;
+  color: #0c6961;
+}
+
+.Frame a:hover,
+.Frame a:active,
+.Frame a.active {
+  color: #11998e;
 }
 
 .Form button {
@@ -26,9 +43,9 @@
   width: 150px;
   transition: all 0.5s;
   cursor: pointer;
-  float: right;
+  float: left;
   margin-right: 40px;
-  margin-top: 200px;
+  margin-top: 70px;
 }
 
 .Form button span {

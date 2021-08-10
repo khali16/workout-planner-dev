@@ -11,7 +11,8 @@
 
 .Button1 {
   border: 3px solid #395e60;
-  background-color: #009999;
+  background-color: #11998e;
+  opacity: 0.2;
   border: none;
   font-size: 28px;
   color: #ffffff;

@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
+import { getFullMonthName } from "../utils/dateUtils";
 
-interface Workout {
-  id: string;
+export interface Workout {
+  // id: string;
   typeOfExercise: string[];
   day: number;
-  month: string;
+  // month: string;
 }
 
-export const useDB = (day: number) => {
+export const useWorkouts = (month: number) => {
   const [workoutsDB, setWorkouts] = useState<Workout[]>([]);
+
   useEffect(() => {
     const db = firebase.firestore();
+    const monthName = getFullMonthName(month);
 
     db.collection("workouts")
-      .where("day", "==", day)
+      // .where("day", "==", day)
+      .where("monthName", "==", monthName)
       .get()
       .then((querySnapshot) => {
         if (!querySnapshot.empty) {
@@ -23,10 +27,10 @@ export const useDB = (day: number) => {
             workoutsArray = [
               ...workoutsArray,
               {
-                id: doc.id,
+                // id: doc.id,
                 typeOfExercise: doc.data().typeOfExercise,
                 day: doc.data().day,
-                month: doc.data().monthName,
+                // month: doc.data().monthName,
               },
             ];
           });
@@ -36,7 +40,7 @@ export const useDB = (day: number) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [month]);
 
   return { workoutsDB };
 };

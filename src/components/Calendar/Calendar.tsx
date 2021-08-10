@@ -11,7 +11,6 @@ import { useAuth } from "../../store/auth-context";
 const Calendar = () => {
   const today = new Date();
   const [date, setDate] = useState(today);
-  const [cwiczenia, setCwiczenia] = useState([]);
   const { day, startDay, month, year } = useDate(date);
 
   return (

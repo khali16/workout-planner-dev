@@ -1,10 +1,7 @@
 .Frame {
-  width: 1200px;
+  width: 100%;
   height: auto;
-  border: 2px solid #395e60;
   background-color: #263f40;
   box-shadow: 2px 2px 2px #395e60;
   margin: auto;
-  margin-top: 50px;
-  border-radius: 10px;
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useField, FieldAttributes } from "formik";
 import { TextField } from "@material-ui/core";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import styles from "./TextFields.module.css";
 
 const TextFields: React.FC<FieldAttributes<{}>> = ({
   placeholder,

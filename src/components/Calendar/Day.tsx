@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Day.module.css";
 import { useRouteMatch, useHistory, useParams, Link } from "react-router-dom";
+import { Workout } from "../../hooks/useWorkouts";
 
 interface OwnProps {
   index: number;
   day: number;
   month: number;
-  workouts: Workouts[];
-}
-
-interface Workouts {
-  day: number;
-  typeOfExercise: string[];
-  month: string;
+  workouts: Workout[];
 }
 
 const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {

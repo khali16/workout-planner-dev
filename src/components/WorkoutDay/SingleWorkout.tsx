@@ -27,7 +27,7 @@ const SingleWorkout: React.FC<Props> = ({
 
   return (
     <div className={styles.frame}>
-      <VerticalTimeline layout="1-column" className={styles.secondFrame}>
+      <VerticalTimeline layout="1-column" className={styles.Timeline}>
         <VerticalTimelineElement
           dateClassName="vertical-timeline-element--work"
           className={styles.box}
