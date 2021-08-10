@@ -6,7 +6,6 @@ import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
-import { ReactComponent as WorkoutImage } from "../../Icons/workout.svg";
 
 const SignUpForm = () => {
   const history = useHistory();

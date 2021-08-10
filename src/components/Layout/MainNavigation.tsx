@@ -47,9 +47,11 @@ const MainNavigation = () => {
               </NavLink>
             </li>
           )}
-          <li>
-            <a onClick={logoutHandler}>Logout</a>
-          </li>
+          {currentUser && (
+            <li>
+              <a onClick={logoutHandler}>Logout</a>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

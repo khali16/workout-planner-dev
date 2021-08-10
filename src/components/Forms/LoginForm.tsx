@@ -7,9 +7,10 @@ import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
 import { ReactComponent as Bike } from "../../Icons/stationary-bike.svg";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const LoginForm = () => {
-  const { login } = useAuth();
+  const { login, loading } = useAuth();
   const history = useHistory();
 
   async function submitHandler(email: string, password: string) {

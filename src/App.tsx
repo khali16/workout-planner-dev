@@ -1,7 +1,6 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar/Calendar";
-import LoginForm from "./components/Forms/LoginForm";
 import Layout from "./components/Layout/Layout";
 import WorkoutPlan from "./components/WorkoutDay/WorkoutPlan";
 import { AuthProvider } from "./store/auth-context";
