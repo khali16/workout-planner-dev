@@ -17,10 +17,10 @@ const Calendar = () => {
     <>
       <div className={styles.Frame}>
         <CalendarHeadline
-          onClick={() => setDate(new Date(year, month - 1, day))}
+          prevMonth={() => setDate(new Date(year, month - 1, day))}
           month={month}
           year={year}
-          onClick1={() => setDate(new Date(year, month + 1, day))}
+          nextMonth={() => setDate(new Date(year, month + 1, day))}
         />
         <Days date={date} month={month} startDay={startDay} />
       </div>

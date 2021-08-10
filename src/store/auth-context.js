@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
       db.collection("users").doc(response.user.uid).set(user);
       setLoading(true);
     }
+    localStorage.setItem("user", email);
     setIsLoggedIn(true);
     setLoading(false);
     history.push("/calendar");
@@ -44,6 +45,7 @@ export function AuthProvider({ children }) {
           console.log(doc.data());
         });
       });
+    localStorage.setItem("user", email);
     setIsLoggedIn(true);
     history.push("/calendar");
   }

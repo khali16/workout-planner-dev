@@ -6,18 +6,21 @@ export interface Workout {
   // id: string;
   typeOfExercise: string[];
   day: number;
-  // month: string;
+  month: string;
 }
 
 export const useWorkouts = (month: number) => {
   const [workoutsDB, setWorkouts] = useState<Workout[]>([]);
+  const userEmail = firebase.auth().currentUser?.email;
+
+  const user = localStorage.getItem("user");
 
   useEffect(() => {
     const db = firebase.firestore();
     const monthName = getFullMonthName(month);
 
     db.collection("workouts")
-      // .where("day", "==", day)
+      .where("user", "==", user)
       .where("monthName", "==", monthName)
       .get()
       .then((querySnapshot) => {
@@ -30,7 +33,7 @@ export const useWorkouts = (month: number) => {
                 // id: doc.id,
                 typeOfExercise: doc.data().typeOfExercise,
                 day: doc.data().day,
-                // month: doc.data().monthName,
+                month: doc.data().monthName,
               },
             ];
           });
@@ -40,7 +43,7 @@ export const useWorkouts = (month: number) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [month]);
+  }, [getFullMonthName(month), month]);
 
   return { workoutsDB };
 };

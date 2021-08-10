@@ -13,6 +13,7 @@ const MainNavigation = () => {
 
   function logoutHandler() {
     firebase.auth().signOut();
+    localStorage.removeItem("user");
     history.push("/login");
     console.log("wylogowano");
   }

@@ -11,9 +11,10 @@ interface Workout {
 
 export const useFirestore = (day: string, monthName: string) => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
+    const userEmail = localStorage.getItem('user')
 
     const fetch = async() => {
-      const reponse = firebase.firestore().collection("workouts").where("day", "==", Number(day)).where("monthName", "==", monthName)
+      const reponse = firebase.firestore().collection("workouts").where("day", "==", Number(day)).where("monthName", "==", monthName).where("user", "==", userEmail)
       const odp = await reponse.get().then( snapshot => {
         let workoutsArray: Workout[] = [];
         snapshot.forEach( doc => {
