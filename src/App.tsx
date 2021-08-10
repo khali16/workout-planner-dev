@@ -7,6 +7,7 @@ import WorkoutPlan from "./components/WorkoutDay/WorkoutPlan";
 import { AuthProvider } from "./store/auth-context";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Welcome from "./pages/Welcome";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <AuthProvider>
         <Switch>
           <Route path="/" exact>
-            <LoginForm />
+            <Welcome />
           </Route>
           <Route path="/login">
             <Login />

@@ -116,9 +116,7 @@ const SignUpForm = () => {
           </Form>
         )}
       </Formik>
-      <div className={styles.MotivationBox}>
-        <h1>Let's begin your Healthiest Journey together!</h1>
-      </div>
+      <div className={styles.MotivationBox}></div>
     </div>
   );
 };
