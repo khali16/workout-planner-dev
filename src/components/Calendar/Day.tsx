@@ -17,7 +17,9 @@ const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
 
   const pushToSelectedDayHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    history.push(`${match.url}/${rightMonthFigure}/${day}`);
+    if (day > 0) {
+      history.push(`${match.url}/${rightMonthFigure}/${day}`);
+    }
   };
 
   const today = new Date();

@@ -20,7 +20,6 @@ const Calendar = () => {
           prevMonth={() => setDate(new Date(year, month - 1, day))}
           month={month}
           year={year}
-          nextMonth={() => setDate(new Date(year, month + 1, day))}
         />
         <Days date={date} month={month} startDay={startDay} />
       </div>
