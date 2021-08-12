@@ -7,8 +7,11 @@ import { useFirestore } from "../../hooks/useFirestore";
 import SingleWorkout from "./SingleWorkout";
 import styles from "./WorkoutPlan.module.css";
 import EmptyWorkoutPlan from "./EmptyWorkoutPlan";
+import Modal from "react-modal";
 
 interface OwnProps {}
+
+Modal.setAppElement("#overlay-root");
 
 type Props = OwnProps;
 const WorkoutPlan: React.FC<Props> = (props) => {
@@ -19,7 +22,11 @@ const WorkoutPlan: React.FC<Props> = (props) => {
   const { workouts, fetch } = useFirestore(day, miesiac);
 
   const showFormHandler = () => {
-    setShowForm(!showForm);
+    setShowForm(true);
+  };
+
+  const hideModalHandler = () => {
+    setShowForm(false);
   };
 
   useEffect(() => {
@@ -32,7 +39,15 @@ const WorkoutPlan: React.FC<Props> = (props) => {
         <>
           {" "}
           <EmptyWorkoutPlan showForm={setShowForm} />{" "}
-          {showForm && <ExerciseForm showForm={setShowForm} />}
+          {showForm && (
+            <Modal
+              isOpen={showForm}
+              onRequestClose={hideModalHandler}
+              className={styles.modal}
+            >
+              <ExerciseForm showForm={setShowForm} />
+            </Modal>
+          )}
         </>
       ) : (
         <div className={styles.frame}>
@@ -50,7 +65,15 @@ const WorkoutPlan: React.FC<Props> = (props) => {
               <span>Add workout</span>
             </button>
           </div>
-          {showForm && <ExerciseForm showForm={setShowForm} />}
+          {showForm && (
+            <Modal
+              isOpen={showForm}
+              onRequestClose={hideModalHandler}
+              className={styles.modal}
+            >
+              <ExerciseForm showForm={setShowForm} />
+            </Modal>
+          )}
         </div>
       )}
     </>

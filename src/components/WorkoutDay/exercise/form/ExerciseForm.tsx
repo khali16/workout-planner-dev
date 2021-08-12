@@ -35,7 +35,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   const history = useHistory();
   const { addWorkout } = useAuth();
 
-  const showFormHandler = () => {
+  const hideFormHandler = () => {
     showForm(false);
   };
 
@@ -81,7 +81,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
   return (
     <>
       <div className={styles.Frame}>
-        <a onClick={showFormHandler}>X</a>
+        <a onClick={hideFormHandler}>X</a>
         <div className={styles.Header}>
           <div className={styles.Day}>{day}th</div>
           <div className={styles.Month}>{monthName}</div>
