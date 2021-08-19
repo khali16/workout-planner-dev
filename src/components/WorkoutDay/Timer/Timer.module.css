@@ -1,10 +1,11 @@
 .frame {
+  margin: auto;
   display: flex;
+  margin-right: 80px;
 }
 .timerWraper {
   display: flex;
   margin: auto;
-  justify-content: center;
 }
 .timer {
   display: flex;
@@ -23,6 +24,17 @@
   text-align: center;
   margin: auto;
 }
+.buttons {
+  display: grid;
+  margin-left: 40px;
+}
+.stop {
+  grid-row: 1;
+}
+.restart {
+  grid-row: 2;
+}
+
 .frame button {
   border: 3px solid #263f40;
   background-color: #11998e;

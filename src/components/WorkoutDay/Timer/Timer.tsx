@@ -9,12 +9,16 @@ interface Props {
 
 const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [key, setKey] = useState(0);
 
   const startTimerHandler = () => {
     setIsPlaying(true);
   };
   const stopTimerHandler = () => {
     setIsPlaying(false);
+  };
+  const resetTimeHandler = () => {
+    setKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -25,6 +29,7 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
         </button>
         <div className={styles.timerWraper}>
           <CountdownCircleTimer
+            key={key}
             isPlaying={isPlaying}
             size={200}
             duration={durationSeconds}
@@ -37,9 +42,14 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
             {handleTimePass(exercise)}
           </CountdownCircleTimer>
         </div>
-        <button onClick={stopTimerHandler}>
-          <span>Stop</span>
-        </button>
+        <div className={styles.buttons}>
+          <button onClick={stopTimerHandler} className={styles.stop}>
+            <span>Stop</span>
+          </button>
+          <button onClick={resetTimeHandler} className={styles.restart}>
+            <span>Restart</span>
+          </button>
+        </div>
       </div>
     </>
   );
@@ -51,10 +61,19 @@ const handleTimePass =
     renderTimeHandler(remainingTime, exercise);
 
 const renderTimeHandler = (seconds: number | undefined, exercise: string) => (
-  <div className={styles.timer}>
-    <div className={styles.text}>{exercise}</div>
-    <div className={styles.value}>{seconds}</div>
-  </div>
+  <>
+    <div className={styles.timer}>
+      <div className={styles.text}>{exercise}</div>
+      <div className={styles.value}>{seconds}</div>
+    </div>
+    {/* 
+  // @ts-ignore */}
+    {seconds <= 5 && (
+      <audio>
+        <source src="../../../Sound/T-REX ROAR.mp3" />
+      </audio>
+    )}
+  </>
 );
 
 export default Timer;

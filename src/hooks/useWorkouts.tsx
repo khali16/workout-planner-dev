@@ -3,7 +3,6 @@ import firebase from "firebase";
 import { getFullMonthName } from "../utils/dateUtils";
 
 export interface Workout {
-  // id: string;
   typeOfExercise: string[];
   day: number;
   month: string;
@@ -11,13 +10,12 @@ export interface Workout {
 
 export const useWorkouts = (month: number) => {
   const [workoutsDB, setWorkouts] = useState<Workout[]>([]);
-  const userEmail = firebase.auth().currentUser?.email;
 
   const user = localStorage.getItem("user");
+  const monthName = getFullMonthName(month);
 
   useEffect(() => {
     const db = firebase.firestore();
-    const monthName = getFullMonthName(month);
 
     db.collection("workouts")
       .where("user", "==", user)
@@ -45,5 +43,5 @@ export const useWorkouts = (month: number) => {
       });
   }, [getFullMonthName(month), month]);
 
-  return { workoutsDB };
+  return { workoutsDB, monthName };
 };
