@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
+import useSound from "use-sound";
 import styles from "./Timer.module.css";
+//@ts-ignore
+import trexSound from "../../../Sound/T-REX ROAR.mp3";
+import { useEffect } from "react";
 
 interface Props {
   durationSeconds: number;
@@ -8,18 +12,41 @@ interface Props {
 }
 
 const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [play] = useSound(trexSound);
+
   const [key, setKey] = useState(0);
 
   const startTimerHandler = () => {
-    setIsPlaying(true);
+    setIsTimerActive(true);
   };
   const stopTimerHandler = () => {
-    setIsPlaying(false);
+    setIsTimerActive(false);
   };
   const resetTimeHandler = () => {
     setKey((prevKey) => prevKey + 1);
   };
+
+  const handleTimePass =
+    (exercise: string) =>
+    ({ remainingTime }: TimeProps) =>
+      renderTimeHandler(remainingTime, exercise);
+
+  const renderTimeHandler = (seconds: number | undefined, exercise: string) => {
+    useEffect(() => {
+      seconds === 5 && play();
+    }, [seconds]);
+    return (
+      <>
+        <div className={styles.timer}>
+          <div className={styles.text}>{exercise}</div>
+          <div className={styles.value}>{seconds}</div>
+        </div>
+      </>
+    );
+  };
+
+  useEffect(() => {}, [durationSeconds]);
 
   return (
     <>
@@ -30,7 +57,7 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
         <div className={styles.timerWraper}>
           <CountdownCircleTimer
             key={key}
-            isPlaying={isPlaying}
+            isPlaying={isTimerActive}
             size={200}
             duration={durationSeconds}
             colors={[
@@ -54,26 +81,5 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
     </>
   );
 };
-
-const handleTimePass =
-  (exercise: string) =>
-  ({ remainingTime }: TimeProps) =>
-    renderTimeHandler(remainingTime, exercise);
-
-const renderTimeHandler = (seconds: number | undefined, exercise: string) => (
-  <>
-    <div className={styles.timer}>
-      <div className={styles.text}>{exercise}</div>
-      <div className={styles.value}>{seconds}</div>
-    </div>
-    {/* 
-  // @ts-ignore */}
-    {seconds <= 5 && (
-      <audio>
-        <source src="../../../Sound/T-REX ROAR.mp3" />
-      </audio>
-    )}
-  </>
-);
 
 export default Timer;

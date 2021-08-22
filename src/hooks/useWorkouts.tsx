@@ -16,7 +16,6 @@ export const useWorkouts = (month: number) => {
 
   useEffect(() => {
     const db = firebase.firestore();
-
     db.collection("workouts")
       .where("user", "==", user)
       .where("monthName", "==", monthName)
@@ -36,6 +35,8 @@ export const useWorkouts = (month: number) => {
             ];
           });
           setWorkouts(workoutsArray);
+        } else {
+          setWorkouts([]);
         }
       })
       .catch((error) => {

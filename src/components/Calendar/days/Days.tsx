@@ -28,10 +28,6 @@ const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
 
   useEffect(() => {
     setWorkouts(workoutsDB);
-
-    return () => {
-      setWorkouts([]);
-    };
   }, [workoutsDB, month, monthName]);
 
   return (

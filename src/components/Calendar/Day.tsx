@@ -40,7 +40,6 @@ const Day: React.FC<OwnProps> = ({ index, day, month, workouts }: OwnProps) => {
           {workouts.map((workout) =>
             workout.day === day ? <li>{workout.typeOfExercise}</li> : null
           )}
-          {console.log(rightMonthFigure)}
         </div>
       </div>
     </>
