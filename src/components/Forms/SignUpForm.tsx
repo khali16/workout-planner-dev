@@ -6,7 +6,6 @@ import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
-import { ReactComponent as WorkoutImage } from "../../Icons/workout.svg";
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -116,9 +115,7 @@ const SignUpForm = () => {
           </Form>
         )}
       </Formik>
-      <div className={styles.MotivationBox}>
-        <h1>Let's begin your Healthiest Journey together!</h1>
-      </div>
+      <div className={styles.MotivationBox}></div>
     </div>
   );
 };

@@ -27,8 +27,11 @@ export function AuthProvider({ children }) {
         firstName: firstName,
       };
       db.collection("users").doc(response.user.uid).set(user);
+      setLoading(true);
     }
+    localStorage.setItem("user", email);
     setIsLoggedIn(true);
+    setLoading(false);
     history.push("/calendar");
   }
 
@@ -42,6 +45,7 @@ export function AuthProvider({ children }) {
           console.log(doc.data());
         });
       });
+    localStorage.setItem("user", email);
     setIsLoggedIn(true);
     history.push("/calendar");
   }
@@ -81,9 +85,11 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     currentUserEmail,
+    isLoggedIn,
     signup,
     login,
     addWorkout,
+    loading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

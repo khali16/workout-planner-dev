@@ -1,8 +1,9 @@
 .Day {
-  background-color: #afcecf;
-  opacity: 0.2;
+  background-color: #c9a5a5;
+  opacity: 0.3;
   cursor: pointer;
   height: 170px;
+  color: black;
 }
 
 .nonDay {

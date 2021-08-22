@@ -13,6 +13,7 @@ const MainNavigation = () => {
 
   function logoutHandler() {
     firebase.auth().signOut();
+    localStorage.removeItem("user");
     history.push("/login");
     console.log("wylogowano");
   }
@@ -47,9 +48,11 @@ const MainNavigation = () => {
               </NavLink>
             </li>
           )}
-          <li>
-            <a onClick={logoutHandler}>Logout</a>
-          </li>
+          {currentUser && (
+            <li>
+              <a onClick={logoutHandler}>Logout</a>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

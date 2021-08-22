@@ -11,9 +11,12 @@ interface Workout {
 
 export const useFirestore = (day: string, monthName: string) => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
+    const [loading, setLoading] = useState(false);
+    const userEmail = localStorage.getItem('user')
 
     const fetch = async() => {
-      const reponse = firebase.firestore().collection("workouts").where("day", "==", Number(day)).where("monthName", "==", monthName)
+      setLoading(true)
+      const reponse = firebase.firestore().collection("workouts").where("day", "==", Number(day)).where("monthName", "==", monthName).where("user", "==", userEmail)
       const odp = await reponse.get().then( snapshot => {
         let workoutsArray: Workout[] = [];
         snapshot.forEach( doc => {
@@ -31,9 +34,10 @@ export const useFirestore = (day: string, monthName: string) => {
           setWorkouts([...workoutsArray])
         })
       })
+      setLoading(false)
     }
    
 
     
-      return {workouts, fetch}
+      return {workouts, fetch, loading}
 }

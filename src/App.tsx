@@ -1,12 +1,12 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar/Calendar";
-import LoginForm from "./components/Forms/LoginForm";
 import Layout from "./components/Layout/Layout";
 import WorkoutPlan from "./components/WorkoutDay/WorkoutPlan";
 import { AuthProvider } from "./store/auth-context";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Welcome from "./pages/Welcome";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <AuthProvider>
         <Switch>
           <Route path="/" exact>
-            <LoginForm />
+            <Welcome />
           </Route>
           <Route path="/login">
             <Login />

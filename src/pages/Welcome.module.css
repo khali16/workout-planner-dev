@@ -1,0 +1,34 @@
+.imageContainer {
+  width: 100%;
+  height: 90vh;
+  position: relative;
+}
+
+.imageContainer::before {
+  content: "";
+  background-image: url("../Icons/083120-open-for-fitness-sculpt-and-burn-cover-1024x768.jpg");
+  background-size: cover;
+  background-position-y: center;
+  background-position-x: left;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+}
+
+.joinContainer {
+  position: fixed;
+  margin-top: 15vh;
+  color: #7d7c64;
+  opacity: 0.8;
+  font-family: "Trocchi", serif;
+  font-size: 45px;
+  font-weight: normal;
+  line-height: 100px;
+  letter-spacing: 1px;
+}
+.joinContainer h1 {
+  width: 40%;
+}

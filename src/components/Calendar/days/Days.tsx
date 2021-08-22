@@ -24,11 +24,11 @@ type Props = OwnProps;
 const Days: FunctionComponent<Props> = ({ date, month, startDay }) => {
   const daysAmount = isLeapYear(date.getFullYear()) ? DAYS_LEAP : DAYS;
   const [workouts, setWorkouts] = useState<Workout[]>([]);
-  const { workoutsDB } = useWorkouts(month);
+  const { workoutsDB, monthName } = useWorkouts(month);
 
   useEffect(() => {
     setWorkouts(workoutsDB);
-  }, [workoutsDB]);
+  }, [workoutsDB, month, monthName]);
 
   return (
     <>

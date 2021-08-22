@@ -7,19 +7,26 @@ import { useFirestore } from "../../hooks/useFirestore";
 import SingleWorkout from "./SingleWorkout";
 import styles from "./WorkoutPlan.module.css";
 import EmptyWorkoutPlan from "./EmptyWorkoutPlan";
+import Modal from "react-modal";
+import Spinner from "../../UI/Spinner/Spinner";
 
 interface OwnProps {}
+
+Modal.setAppElement("#overlay-root");
 
 type Props = OwnProps;
 const WorkoutPlan: React.FC<Props> = (props) => {
   const [showForm, setShowForm] = useState(false);
   const { day, monthName } = useCurrentDate();
-  const miesiac = "August";
 
-  const { workouts, fetch } = useFirestore(day, miesiac);
+  const { workouts, fetch, loading } = useFirestore(day, monthName);
 
   const showFormHandler = () => {
-    setShowForm(!showForm);
+    setShowForm(true);
+  };
+
+  const hideModalHandler = () => {
+    setShowForm(false);
   };
 
   useEffect(() => {
@@ -28,12 +35,24 @@ const WorkoutPlan: React.FC<Props> = (props) => {
 
   return (
     <>
-      {workouts.length === 0 ? (
+      {loading ? (
+        <Spinner />
+      ) : workouts.length === 0 ? (
         <>
           {" "}
           <EmptyWorkoutPlan showForm={setShowForm} />{" "}
-          {showForm && <ExerciseForm showForm={setShowForm} />}
+          {showForm && (
+            <Modal
+              isOpen={showForm}
+              onRequestClose={hideModalHandler}
+              className={styles.modal}
+            >
+              <ExerciseForm showForm={setShowForm} />
+            </Modal>
+          )}
         </>
+      ) : loading ? (
+        <Spinner />
       ) : (
         <div className={styles.frame}>
           {workouts.map((workout, key) => (
@@ -50,7 +69,15 @@ const WorkoutPlan: React.FC<Props> = (props) => {
               <span>Add workout</span>
             </button>
           </div>
-          {showForm && <ExerciseForm showForm={setShowForm} />}
+          {showForm && (
+            <Modal
+              isOpen={showForm}
+              onRequestClose={hideModalHandler}
+              className={styles.modal}
+            >
+              <ExerciseForm showForm={setShowForm} />
+            </Modal>
+          )}
         </div>
       )}
     </>

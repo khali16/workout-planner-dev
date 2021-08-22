@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
+import useSound from "use-sound";
 import styles from "./Timer.module.css";
+//@ts-ignore
+import trexSound from "../../../Sound/T-REX ROAR.mp3";
+import { useEffect } from "react";
 
 interface Props {
   durationSeconds: number;
@@ -8,14 +12,41 @@ interface Props {
 }
 
 const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [play] = useSound(trexSound);
+
+  const [key, setKey] = useState(0);
 
   const startTimerHandler = () => {
-    setIsPlaying(true);
+    setIsTimerActive(true);
   };
   const stopTimerHandler = () => {
-    setIsPlaying(false);
+    setIsTimerActive(false);
   };
+  const resetTimeHandler = () => {
+    setKey((prevKey) => prevKey + 1);
+  };
+
+  const handleTimePass =
+    (exercise: string) =>
+    ({ remainingTime }: TimeProps) =>
+      renderTimeHandler(remainingTime, exercise);
+
+  const renderTimeHandler = (seconds: number | undefined, exercise: string) => {
+    useEffect(() => {
+      seconds === 5 && play();
+    }, [seconds]);
+    return (
+      <>
+        <div className={styles.timer}>
+          <div className={styles.text}>{exercise}</div>
+          <div className={styles.value}>{seconds}</div>
+        </div>
+      </>
+    );
+  };
+
+  useEffect(() => {}, [durationSeconds]);
 
   return (
     <>
@@ -25,7 +56,8 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
         </button>
         <div className={styles.timerWraper}>
           <CountdownCircleTimer
-            isPlaying={isPlaying}
+            key={key}
+            isPlaying={isTimerActive}
             size={200}
             duration={durationSeconds}
             colors={[
@@ -37,24 +69,17 @@ const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
             {handleTimePass(exercise)}
           </CountdownCircleTimer>
         </div>
-        <button onClick={stopTimerHandler}>
-          <span>Stop</span>
-        </button>
+        <div className={styles.buttons}>
+          <button onClick={stopTimerHandler} className={styles.stop}>
+            <span>Stop</span>
+          </button>
+          <button onClick={resetTimeHandler} className={styles.restart}>
+            <span>Restart</span>
+          </button>
+        </div>
       </div>
     </>
   );
 };
-
-const handleTimePass =
-  (exercise: string) =>
-  ({ remainingTime }: TimeProps) =>
-    renderTimeHandler(remainingTime, exercise);
-
-const renderTimeHandler = (seconds: number | undefined, exercise: string) => (
-  <div className={styles.timer}>
-    <div className={styles.text}>{exercise}</div>
-    <div className={styles.value}>{seconds}</div>
-  </div>
-);
 
 export default Timer;

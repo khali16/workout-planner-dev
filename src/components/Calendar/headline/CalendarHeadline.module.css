@@ -4,15 +4,15 @@
   padding: 10px 10px 5px 10px;
   display: flex;
   justify-content: space-between;
-  background-color: #263f40;
-  color: #009999;
-  border-radius: 10px;
+  background-color: #11998e;
+  color: #c9a5a5;
+  margin: 0;
+  text-align: center;
 }
-
 .Button1 {
   border: 3px solid #395e60;
-  background-color: #11998e;
-  opacity: 0.2;
+  background-color: #c09696;
+  opacity: 0.3;
   border: none;
   font-size: 28px;
   color: #ffffff;
@@ -53,7 +53,7 @@
 /* drugi button*/
 .Button {
   border: 3px solid #263f40;
-  background-color: #009999;
+  background-color: #c09696;
   border: none;
   font-size: 28px;
   color: #ffffff;
