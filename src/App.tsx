@@ -13,7 +13,7 @@ import { useSpinner } from "./store/spinner-context";
 import styles from "./App.module.css";
 
 function App() {
-  Modal.setAppElement("#root");
+  Modal.setAppElement("#modal");
   const { isLoading } = useSpinner();
   return (
     <Layout>

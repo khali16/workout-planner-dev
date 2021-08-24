@@ -14,7 +14,7 @@ const MainNavigation = () => {
   function logoutHandler() {
     firebase.auth().signOut();
     localStorage.removeItem("user");
-    history.push("/login");
+    history.push("/");
     console.log("wylogowano");
   }
 
