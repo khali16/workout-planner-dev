@@ -1,4 +1,3 @@
-import React, { useContext, useState } from "react";
 import styles from "./SignUpForm.module.css";
 import { useAuth } from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
@@ -15,28 +14,26 @@ const SignUpForm = () => {
     email: string,
     password: string
   ) {
-    console.log(firstName, email, password);
-
     try {
       await signup(email, password, firstName);
     } catch {
-      alert("Failed to create an account");
+      alert("Failed to create an account.");
     }
   }
 
   const Schema = Yup.object().shape({
     firstName: Yup.string()
-      .required("Please, enter your first name")
-      .min(3, "Your name should have at least 3 letters"),
-    email: Yup.string().email().required("Please, enter valid email"),
+      .required("Please, enter your first name.")
+      .min(3, "Your name should have at least 3 letters."),
+    email: Yup.string().email().required("Please, enter valid email."),
     password: Yup.string()
-      .required("Please, enter your password")
+      .required("Please, enter strong password.")
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
         "Password must contain: at least 8 characters, one uppercase, one number and one special case character."
       ),
     confirmPassword: Yup.string()
-      .required("Please confirm your password")
+      .required("Please confirm your password.")
       .when("password", {
         //@ts-ignore
         is: (password) => (password && password.length > 0 ? true : false),

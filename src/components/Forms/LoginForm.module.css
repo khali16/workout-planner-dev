@@ -1,8 +1,7 @@
 .Frame {
   display: flex;
   height: 88vh;
-  background: url("../../Icons/trainers-on-the-best-workout-for-people-with-back-pain.png")
-    no-repeat;
+  background: url("../../Icons/LoginFormBackground.png") no-repeat;
   background-size: 100% auto;
   margin-top: 50px;
   position: relative;

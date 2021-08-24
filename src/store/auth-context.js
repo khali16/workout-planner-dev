@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
+import { useSpinner } from "./spinner-context";
 
 const AuthContext = React.createContext();
 
@@ -10,6 +11,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const { openSpinner, closeSpinner } = useSpinner();
   const [currentUser, setCurrentUser] = useState();
   const [currentUserEmail, setCurrentUserEmail] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +38,7 @@ export function AuthProvider({ children }) {
   }
 
   async function login(email, password) {
+    openSpinner();
     const response = await auth.signInWithEmailAndPassword(email, password);
     db.collection("users")
       .where("email", "==", email)
@@ -47,6 +50,7 @@ export function AuthProvider({ children }) {
       });
     localStorage.setItem("user", email);
     setIsLoggedIn(true);
+    closeSpinner();
     history.push("/calendar");
   }
 

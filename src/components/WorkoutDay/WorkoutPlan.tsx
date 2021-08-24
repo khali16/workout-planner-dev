@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import ExerciseForm from "../WorkoutDay/exercise/form/ExerciseForm";
-import firebase from "firebase";
 import { useCurrentDate } from "../../hooks/useCurrentDate";
-import { useFirestore } from "../../hooks/useFirestore";
+import { useSpecificWorkout } from "../../hooks/useSpecificWorkout";
 import SingleWorkout from "./SingleWorkout";
 import styles from "./WorkoutPlan.module.css";
 import EmptyWorkoutPlan from "./EmptyWorkoutPlan";
 import Modal from "react-modal";
+import { useSpinner } from "../../store/spinner-context";
 import Spinner from "../../UI/Spinner/Spinner";
 
 interface OwnProps {}
@@ -17,9 +17,14 @@ Modal.setAppElement("#overlay-root");
 type Props = OwnProps;
 const WorkoutPlan: React.FC<Props> = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [sort, setSort] = useState(false);
   const { day, monthName } = useCurrentDate();
+  const { isLoading } = useSpinner();
+  const { workouts, fetch } = useSpecificWorkout(day, monthName, sort);
 
-  const { workouts, fetch, loading } = useFirestore(day, monthName);
+  const sortHandler = () => {
+    setSort(!sort);
+  };
 
   const showFormHandler = () => {
     setShowForm(true);
@@ -31,13 +36,13 @@ const WorkoutPlan: React.FC<Props> = (props) => {
 
   useEffect(() => {
     fetch();
-  }, [showForm]);
+  }, [showForm, sort]);
+
+  const chosenSorting = sort ? "latest" : "oldest";
 
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : workouts.length === 0 ? (
+      {isLoading ? null : workouts.length === 0 ? (
         <>
           {" "}
           <EmptyWorkoutPlan showForm={setShowForm} />{" "}
@@ -51,10 +56,16 @@ const WorkoutPlan: React.FC<Props> = (props) => {
             </Modal>
           )}
         </>
-      ) : loading ? (
+      ) : isLoading ? (
         <Spinner />
       ) : (
         <div className={styles.frame}>
+          <div className={styles.sort}>
+            <button onClick={sortHandler} className={chosenSorting}>
+              Sort by {chosenSorting}
+            </button>
+          </div>
+          {console.log(sort)}
           {workouts.map((workout, key) => (
             <SingleWorkout
               key={key}
@@ -65,9 +76,11 @@ const WorkoutPlan: React.FC<Props> = (props) => {
             />
           ))}
           <div className={styles.NewExercise}>
-            <button onClick={showFormHandler}>
-              <span>Add workout</span>
-            </button>
+            <div className={styles.AddExercise}>
+              <button onClick={showFormHandler}>
+                <span>Add workout</span>
+              </button>
+            </div>
           </div>
           {showForm && (
             <Modal

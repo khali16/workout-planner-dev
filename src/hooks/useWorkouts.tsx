@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import { getFullMonthName } from "../utils/dateUtils";
+import { useSpinner } from "../store/spinner-context";
 
 export interface Workout {
   typeOfExercise: string[];
@@ -10,11 +11,13 @@ export interface Workout {
 
 export const useWorkouts = (month: number) => {
   const [workoutsDB, setWorkouts] = useState<Workout[]>([]);
+  const { openSpinner, closeSpinner } = useSpinner();
 
   const user = localStorage.getItem("user");
   const monthName = getFullMonthName(month);
 
   useEffect(() => {
+    openSpinner();
     const db = firebase.firestore();
     db.collection("workouts")
       .where("user", "==", user)
@@ -38,9 +41,11 @@ export const useWorkouts = (month: number) => {
         } else {
           setWorkouts([]);
         }
+        closeSpinner();
       })
       .catch((error) => {
         console.log(error);
+        closeSpinner();
       });
   }, [getFullMonthName(month), month]);
 

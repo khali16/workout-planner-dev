@@ -37,7 +37,7 @@
 .Loader:before {
   width: 50%;
   height: 50%;
-  background: white;
+  background: transparent;
   border-radius: 100% 0 0 0;
   position: absolute;
   top: 0;
@@ -45,7 +45,7 @@
   content: "";
 }
 .Loader:after {
-  background: white;
+  background: transparent;
   width: 75%;
   height: 75%;
   border-radius: 50%;

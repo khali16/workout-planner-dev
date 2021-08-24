@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import useSound from "use-sound";
 import styles from "./Timer.module.css";
-//@ts-ignore
-import trexSound from "../../../Sound/T-REX ROAR.mp3";
+import CountDownSound from "../../../Sound/5SecondCountdownSoundEffect.mp3";
 import { useEffect } from "react";
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 
 const Timer: React.FC<Props> = ({ durationSeconds, exercise }) => {
   const [isTimerActive, setIsTimerActive] = useState(false);
-  const [play] = useSound(trexSound);
+  const [play] = useSound(CountDownSound);
 
   const [key, setKey] = useState(0);
 

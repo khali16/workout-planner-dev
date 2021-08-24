@@ -1,10 +1,7 @@
 .frame {
   width: 100%;
   background-color: #263f40;
-  height: auto;
-}
-.NewExercise {
-  margin-left: 43%;
+  height: 90vh;
 }
 .frame button {
   border: 3px solid #263f40;
@@ -43,9 +40,25 @@
   opacity: 1;
   right: 0;
 }
-
+.sort {
+  margin-top: 10px;
+  position: fixed;
+  margin-left: 30px;
+}
+.sort button {
+  background-color: #11998e;
+  width: 100px;
+  height: auto;
+  margin-left: 40px;
+}
 .modal {
   background-color: #263f40;
   width: 50%;
   margin: auto;
+}
+.NewExercise {
+  background-color: #263f40;
+}
+.AddExercise {
+  margin-left: 45%;
 }

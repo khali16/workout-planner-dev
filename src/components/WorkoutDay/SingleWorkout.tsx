@@ -7,7 +7,7 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import ReactPlayer from "react-player";
 import styles from "./SingleWorkout.module.css";
-import { ReactComponent as Muscle } from "../../Icons/muscle.svg";
+import { ReactComponent as Biceps } from "../../Icons/Biceps.svg";
 import Timer from "./Timer/Timer";
 
 interface Props {
@@ -31,7 +31,7 @@ const SingleWorkout: React.FC<Props> = ({
         <VerticalTimelineElement
           dateClassName="vertical-timeline-element--work"
           className={styles.box}
-          icon={<Muscle />}
+          icon={<Biceps />}
           iconClassName={styles.icon}
         >
           <h3 className="vertical-timeline-element-title">

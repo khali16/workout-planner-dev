@@ -1,30 +1,25 @@
-import React, { useContext } from "react";
 import styles from "./LoginForm.module.css";
 import { useAuth } from "../../store/auth-context";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import * as Yup from "yup";
 import TextFields from "../WorkoutDay/exercise/form/TextFields";
-import { ReactComponent as Bike } from "../../Icons/stationary-bike.svg";
-import Spinner from "../../UI/Spinner/Spinner";
 
 const LoginForm = () => {
-  const { login, loading } = useAuth();
-  const history = useHistory();
+  const { login } = useAuth();
 
   async function submitHandler(email: string, password: string) {
     try {
       await login(email, password);
-      console.log("Logged in");
     } catch {
-      alert("Failer to login");
+      alert("Failed to login");
     }
   }
 
   const Schema = Yup.object().shape({
-    email: Yup.string().email().required("Please, enter valid email"),
-    password: Yup.string().required("Please, enter valid password"),
+    email: Yup.string().email().required("Please, enter valid email."),
+    password: Yup.string().required("Please, enter valid password."),
   });
 
   return (
