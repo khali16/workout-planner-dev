@@ -19,7 +19,7 @@ const TextFields: React.FC<FieldAttributes<{}>> = ({
           "&&&&:after": {
             borderBottom: "2px solid #11998e",
           },
-          color: "orange",
+          color: "#ff7f50",
         },
       },
     },

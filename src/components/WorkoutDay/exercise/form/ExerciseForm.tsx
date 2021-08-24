@@ -1,7 +1,6 @@
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styles from "./ExerciseForm.module.css";
-import { Exercise } from "../../../../constants/interfaces";
 import { useCurrentDate } from "../../../../hooks/useCurrentDate";
 import * as Yup from "yup";
 import TextFields from "./TextFields";
@@ -10,29 +9,11 @@ import { TextField } from "@material-ui/core";
 import BodyPartToExercise from "./BodyPartToExercise";
 import { useAuth } from "../../../../store/auth-context";
 
-export interface workoutPlan {
-  specifiedDay?: string;
-  specifiedMonth?: string;
-  title?: string;
-  bodyWorkout?: {
-    legs: string;
-    glutes: string;
-    abs: string;
-    arms: string;
-    back: string;
-  };
-  secondsOfExercise?: number;
-  details?: string;
-  video?: string;
-  time?: number;
-}
-
 interface OwnProps {
   showForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
-  const history = useHistory();
   const { addWorkout } = useAuth();
 
   const hideFormHandler = () => {
@@ -44,7 +25,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
 
   async function submitHandler(
     title: string,
-    typeOfExercise: never[],
+    typeOfExercise: string,
     secondsOfExercise: string,
     url: string,
     day: number,
@@ -61,7 +42,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
       );
       console.log(day, monthName);
     } catch {
-      alert("Something went worng...");
+      alert("Something went wrong...");
     }
   }
 
@@ -69,13 +50,17 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
     title: Yup.string()
       .min(3, "Too short!")
       .max(20, "Too long!")
-      .required("Please, enter a exercise"),
-    typeOfExercise: Yup.array().required("Select one part of body"),
+      .required("Please, enter a exercise."),
+    typeOfExercise: Yup.string().required(
+      "Select one part of body to exercise."
+    ),
     secondsOfExercise: Yup.number()
       .min(5, "Don't be lazy")
       .max(180, "Whoah! Slow down")
       .required("Please, enter likely time of the exercise"),
-    url: Yup.string().required("Please, enter some url of exercise or music!"),
+    url: Yup.string().required(
+      "Please, enter some video URL of exercise or music!"
+    ),
   });
 
   return (
@@ -91,7 +76,7 @@ const ExerciseForm: React.FC<OwnProps> = ({ showForm }) => {
             validateOnChange={true}
             initialValues={{
               title: "",
-              typeOfExercise: [],
+              typeOfExercise: "",
               secondsOfExercise: "",
               url: "",
             }}

@@ -1,10 +1,7 @@
 .frame {
   width: 100%;
   background-color: #263f40;
-  height: auto;
-}
-.NewExercise {
-  margin-left: 43%;
+  height: 90vh;
 }
 .frame button {
   border: 3px solid #263f40;
@@ -48,4 +45,10 @@
   background-color: #263f40;
   width: 50%;
   margin: auto;
+}
+.NewExercise {
+  background-color: #263f40;
+}
+.AddExercise {
+  margin-left: 45%;
 }

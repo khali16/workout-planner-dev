@@ -6,7 +6,7 @@
 
 .imageContainer::before {
   content: "";
-  background-image: url("../Icons/083120-open-for-fitness-sculpt-and-burn-cover-1024x768.jpg");
+  background-image: url("../Icons/WelcomeBackground.jpg");
   background-size: cover;
   background-position-y: center;
   background-position-x: left;

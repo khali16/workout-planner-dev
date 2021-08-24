@@ -1,23 +1,16 @@
 import React from "react";
 import { Field } from "formik";
 import { Checkbox } from "@material-ui/core";
-import styles from "./BodyPartToExercise.module.css";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const BodyPartToExercise = () => {
   const theme = createMuiTheme({
     overrides: {
       MuiCheckbox: {
-        root: {
-          color: "#11998e !important",
-          "&&&&:before": {
-            color: "#11998e",
-          },
-        },
         colorSecondary: {
-          color: "#11998e;",
+          color: "#11998e !important",
           "&$checked": {
-            color: "#11998e",
+            color: "#ff7f50 !important",
           },
         },
       },
@@ -29,18 +22,17 @@ const BodyPartToExercise = () => {
       <label>
         <ThemeProvider theme={theme}>
           <Field
-            type="checkbox"
+            type="radio"
             name="typeOfExercise"
             value="legs"
             as={Checkbox}
-            className={styles.input}
           />
         </ThemeProvider>
         Legs
       </label>
       <label>
         <Field
-          type="checkbox"
+          type="radio"
           name="typeOfExercise"
           value="glutes"
           as={Checkbox}
@@ -48,30 +40,15 @@ const BodyPartToExercise = () => {
         Glutes
       </label>
       <label>
-        <Field
-          type="checkbox"
-          name="typeOfExercise"
-          value="abs"
-          as={Checkbox}
-        />
+        <Field type="radio" name="typeOfExercise" value="abs" as={Checkbox} />
         Abs
       </label>
       <label>
-        <Field
-          type="checkbox"
-          name="typeOfExercise"
-          value="back"
-          as={Checkbox}
-        />
+        <Field type="radio" name="typeOfExercise" value="back" as={Checkbox} />
         Back
       </label>
       <label>
-        <Field
-          type="checkbox"
-          name="typeOfExercise"
-          value="arms"
-          as={Checkbox}
-        />
+        <Field type="radio" name="typeOfExercise" value="arms" as={Checkbox} />
         Arms
       </label>
     </>
